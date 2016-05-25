@@ -1,0 +1,23 @@
+{
+    "name": "fazland/notifire-bundle",
+    "require": {
+        "php": ">= 5.5",
+        "symfony/framework-bundle": "^2.7|^3.0",
+        "fazland/notifire": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fazland\\NotifireBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Fazland\\NotifireBundle\\Tests\\": "tests/"
+        }
+    },
+    "license": "MIT",
+    "minimum-stability": "dev"
+}
