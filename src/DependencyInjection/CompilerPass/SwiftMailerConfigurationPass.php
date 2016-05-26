@@ -30,8 +30,8 @@ class SwiftMailerConfigurationPass implements CompilerPassInterface
 
         $processor = new Processor();
 
-        $swiftMailerConfig = $processor->processConfiguration($swiftMailerConfiguration, $swiftMailerConfigs);
-        $swiftMailerConfig = $container->getParameterBag()->resolveValue($swiftMailerConfig);
+        $swiftMailerConfig = $container->getParameterBag()->resolveValue($swiftMailerConfigs);
+        $swiftMailerConfig = $processor->processConfiguration($swiftMailerConfiguration, $swiftMailerConfig);
 
         if ($container->getParameter('fazland.notifire.handler.swiftmailer.auto_configure_mailers')) {
             foreach ($swiftMailerConfig['mailers'] as $name => $config) {
