@@ -20,6 +20,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('fazland_notifire');
 
         $this->addSwiftMailerSection($rootNode);
+        $this->addMailgunSection($rootNode);
         $this->addTwilioSection($rootNode);
 
         return $treeBuilder;
@@ -67,6 +68,32 @@ class Configuration implements ConfigurationInterface
                             ->end()
                             ->scalarNode('from_phone')
                                 ->validate()->ifNull()->thenInvalid('Missing value of service attribute')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addMailgunSection($rootNode)
+    {
+        $rootNode
+            ->children()
+                ->arrayNode('mailgun')
+                ->canBeEnabled()
+                ->addDefaultsIfNotSet()
+                ->fixXmlConfig('mailer')
+                ->children()
+                    ->arrayNode('mailers')
+                        ->prototype('array')
+                            ->children()
+                                ->scalarNode('api_key')
+                                    ->validate()->ifNull()->thenInvalid('Api key attribute is missing')->end()
+                                ->end()
+                                ->scalarNode('domain')
+                                    ->validate()->ifNull()->thenInvalid('Domain attribute is missing')->end()
+                                ->end()
                             ->end()
                         ->end()
                     ->end()

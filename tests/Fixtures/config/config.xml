@@ -32,13 +32,19 @@
 
     <notifire:config>
         <notifire:swiftmailer enabled="true" auto_configure_mailers="true" />
-        <!--<notifire:twilio enabled="true">-->
-            <!--<notifire:service-->
-                <!--name="%twilio_name%"-->
-                <!--account_sid="%twilio_account_sid%"-->
-                <!--auth_token="%twilio_auth_token%"-->
-                <!--from_phone="%twilio_from_phone%"-->
-            <!--/>-->
-        <!--</notifire:twilio>-->
+        <notifire:twilio enabled="true">
+            <notifire:service
+                name="%twilio_name%"
+                account_sid="%twilio_account_sid%"
+                auth_token="%twilio_auth_token%"
+                from_phone="%twilio_from_phone%"
+            />
+        </notifire:twilio>
+        <notifire:mailgun enabled="true">
+            <notifire:mailer
+                api_key="api_key"
+                domain="example.org"
+            />
+        </notifire:mailgun>
     </notifire:config>
 </container>

@@ -27,6 +27,7 @@ class NotifireExtension extends Extension
         $loader->load('services.xml');
 
         $this->processSwiftMailer($container, $config['swiftmailer']);
+        $this->processMailgun($container, $config['mailgun']);
         $this->processTwilio($container, $config['twilio']);
     }
 
@@ -61,11 +62,17 @@ class NotifireExtension extends Extension
 
     /**
      * @param ContainerBuilder $container
-     * @param $twilioConfig
+     * @param $config
      */
-    protected function processTwilio(ContainerBuilder $container, $twilioConfig)
+    protected function processTwilio(ContainerBuilder $container, array $config)
     {
-        $container->setParameter('fazland.notifire.handler.twilio.enabled', $twilioConfig['enabled']);
-        $container->setParameter('fazland.notifire.handler.twilio.services', $twilioConfig['services']);
+        $container->setParameter('fazland.notifire.handler.twilio.enabled', $config['enabled']);
+        $container->setParameter('fazland.notifire.handler.twilio.services', $config['services']);
+    }
+
+    private function processMailgun(ContainerBuilder $container, array $config)
+    {
+        $container->setParameter('fazland.notifire.handler.mailgun.enabled', $config['enabled']);
+        $container->setParameter('fazland.notifire.handler.mailgun.services', $config['mailers']);
     }
 }

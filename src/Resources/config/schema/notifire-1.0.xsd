@@ -11,6 +11,7 @@
         <xsd:sequence>
             <xsd:element name="swiftmailer" type="swiftmailer" minOccurs="0" maxOccurs="1" />
             <xsd:element name="twilio" type="twilio" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="mailgun" type="mailgun" minOccurs="0" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>
 
@@ -37,5 +38,18 @@
         <xsd:attribute name="account_sid" type="xsd:string" />
         <xsd:attribute name="auth_token" type="xsd:string" />
         <xsd:attribute name="from_phone" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="mailgun_mailer">
+        <xsd:attribute name="api_key" type="xsd:string" />
+        <xsd:attribute name="domain" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="mailgun">
+        <xsd:sequence>
+            <xsd:element name="mailer" type="mailgun_mailer" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="enabled" type="xsd:boolean" />
     </xsd:complexType>
 </xsd:schema>

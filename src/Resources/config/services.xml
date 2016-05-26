@@ -24,5 +24,10 @@
             <argument />
             <argument />
         </service>
+
+        <service id="fazland.notifire.handler.mailgun.prototype" class="Fazland\Notifire\EventSubscriber\Email\MailgunHandler" abstract="true" public="false">
+            <argument />
+            <argument />
+        </service>
     </services>
 </container>
