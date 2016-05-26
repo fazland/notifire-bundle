@@ -26,20 +26,8 @@ class NotifireExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
-        if (isset($config['swiftmailer'])) {
-            $swiftMailerConfig = $config['swiftmailer'];
-            $container->setParameter('fazland.notifire.handler.swiftmailer.enabled', $swiftMailerConfig['enabled']);
-            $container->setParameter(
-                'fazland.notifire.handler.swiftmailer.auto_configure_mailers',
-                $swiftMailerConfig['auto_configure_mailers']
-            );
-        }
-
-        if (isset($config['twilio'])) {
-            $twilioConfig = $config['twilio'];
-            $container->setParameter('fazland.notifire.handler.twilio.enabled', $twilioConfig['enabled']);
-            $container->setParameter('fazland.notifire.handler.twilio.services', $twilioConfig['services']);
-        }
+        $this->processSwiftMailer($container, $config['swiftmailer']);
+        $this->processTwilio($container, $config['twilio']);
     }
 
     /**
@@ -56,5 +44,28 @@ class NotifireExtension extends Extension
     public function getXsdValidationBasePath()
     {
         return __DIR__ . '/../Resources/config/schema';
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param array $config
+     */
+    protected function processSwiftMailer(ContainerBuilder $container, array $config)
+    {
+        $container->setParameter('fazland.notifire.handler.swiftmailer.enabled', $config['enabled']);
+        $container->setParameter(
+            'fazland.notifire.handler.swiftmailer.auto_configure_mailers',
+            $config['auto_configure_mailers']
+        );
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param $twilioConfig
+     */
+    protected function processTwilio(ContainerBuilder $container, $twilioConfig)
+    {
+        $container->setParameter('fazland.notifire.handler.twilio.enabled', $twilioConfig['enabled']);
+        $container->setParameter('fazland.notifire.handler.twilio.services', $twilioConfig['services']);
     }
 }
