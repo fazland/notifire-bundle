@@ -5,13 +5,13 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="fazland.notifire.builder" class="Fazland\NotifierBundle\Builder\ExtendableBuilder">
+        <service id="fazland.notifire.builder" class="Fazland\NotifireBundle\Builder\ExtendableBuilder">
             <call method="setDispatcher">
                 <argument type="service" id="event_dispatcher" />
             </call>
         </service>
 
-        <service id="fazland.notifire.extension.core" class="Fazland\NotifierBundle\Extension\CoreExtension">
+        <service id="fazland.notifire.extension.core" class="Fazland\NotifireBundle\Extension\CoreExtension">
             <tag name="fazland.notifire.extension" />
         </service>
         
