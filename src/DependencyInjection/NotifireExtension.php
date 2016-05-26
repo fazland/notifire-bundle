@@ -38,10 +38,7 @@ class NotifireExtension extends Extension
         if (isset($config['twilio'])) {
             $twilioConfig = $config['twilio'];
             $container->setParameter('fazland.notifire.handler.twilio.enabled', $twilioConfig['enabled']);
-            $container->setParameter(
-                'fazland.notifire.handler.twilio.auto_configure_services',
-                $twilioConfig['auto_configure_services']
-            );
+            $container->setParameter('fazland.notifire.handler.twilio.services', $twilioConfig['services']);
         }
     }
 

@@ -47,8 +47,7 @@ class SwiftMailerConfigurationPass implements CompilerPassInterface
                     ->addTag('kernel.event_subscriber')
                 ;
 
-                $definitionName = "fazland.notifire.handler.swiftmailer.$name";
-                $container->setDefinition($definitionName, $swiftMailerHandlerDefinition);
+                $container->setDefinition("fazland.notifire.handler.swiftmailer.$name", $swiftMailerHandlerDefinition);
             }
         }
     }
