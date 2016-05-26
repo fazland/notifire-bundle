@@ -2,6 +2,7 @@
 
 namespace Fazland\NotifireBundle;
 
+use Fazland\NotifireBundle\DependencyInjection\CompilerPass\ExtensionPass;
 use Fazland\NotifireBundle\DependencyInjection\CompilerPass\SwiftMailerConfigurationPass;
 use Fazland\NotifireBundle\DependencyInjection\CompilerPass\TwilioConfigurationPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -14,6 +15,7 @@ class NotifireBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
+        $container->addCompilerPass(new ExtensionPass());
         $container->addCompilerPass(new SwiftMailerConfigurationPass());
         $container->addCompilerPass(new TwilioConfigurationPass());
     }
