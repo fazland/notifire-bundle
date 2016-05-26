@@ -1,6 +1,6 @@
 <?php
 
-namespace Fazland\NotifierBundle\DependencyInjection\CompilerPass;
+namespace Fazland\NotifireBundle\DependencyInjection\CompilerPass;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

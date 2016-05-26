@@ -1,6 +1,6 @@
 <?php
 
-namespace Fazland\NotifierBundle\Builder;
+namespace Fazland\NotifireBundle\Builder;
 
 use Fazland\NotifierBundle\Extension\ExtensionInterface;
 use Fazland\Notifire\NotifireBuilder;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fazland\NotifierBundle\Extension;
+namespace Fazland\NotifireBundle\Extension;
 
 use Fazland\Notifire\Notification\Email;
 use Fazland\Notifire\Notification\Sms;
