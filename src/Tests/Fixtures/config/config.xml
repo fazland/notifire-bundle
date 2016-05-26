@@ -1,22 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xmlns:framework="http://symfony.com/schema/dic/symfony"
            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-        http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
+           xmlns:notifire="http://fazland.com/schema/dic/notifire"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+               http://symfony.com/schema/dic/services/services-1.0.xsd
+               http://symfony.com/schema/dic/symfony
+               http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+    >
 
-    <framework:config secret="test" test="false">
+    <parameters>
+        <parameter key="mailer_host">127.123.0.1</parameter>
+        <parameter key="twilio_name">ThisIsTwilioName</parameter>
+        <parameter key="twilio_account_sid">ThisIsTwilioAccountSid</parameter>
+        <parameter key="twilio_auth_token">ThisIsTwilioAuthToken</parameter>
+        <parameter key="twilio_from_phone">ThisIsTwilioFromPhone</parameter>
+    </parameters>
+
+    <framework:config secret="test" test="true">
         <framework:session storage-id="session.storage.filesystem" />
-        <framework:form enabled="true" />
         <framework:csrf-protection enabled="true" />
         <framework:router resource="%kernel.root_dir%/config/routing.xml" />
     </framework:config>
 
-    <swiftmailer:config
-        transport="%mailer_transport%"
-        host="%mailer_host%"
-        username="%mailer_user%"
-        password="%mailer_password%"
-    />
+    <swiftmailer:config default-mailer="second_mailer">
+        <swiftmailer:mailer name="first_mailer" transport="smtp" host="%mailer_host%" />
+        <swiftmailer:mailer name="second_mailer" />
+    </swiftmailer:config>
+
+    <notifire:config>
+        <notifire:swiftmailer enabled="true" auto_configure_mailers="true" />
+        <notifire:twilio enabled="true">
+            <notifire:service
+                name="%twilio_name%"
+                account_sid="%twilio_account_sid%"
+                auth_token="%twilio_auth_token%"
+                from_phone="%twilio_from_phone%"
+            />
+        </notifire:twilio>
+    </notifire:config>
 </container>

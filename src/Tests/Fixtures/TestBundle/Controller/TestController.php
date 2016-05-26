@@ -1,6 +1,6 @@
 <?php
 
-namespace Fazland\NotifireBundle\Fixtures\TestBundle\Controller;
+namespace Fazland\NotifireBundle\Tests\Fixtures\TestBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;

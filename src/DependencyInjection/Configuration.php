@@ -6,6 +6,9 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+/**
+ * @author Alessandro Chitolina <alessandro.chitolina@fazland.com>
+ */
 class Configuration implements ConfigurationInterface
 {
     /**
@@ -32,6 +35,7 @@ class Configuration implements ConfigurationInterface
                 ->treatTrueLike(['enabled' => true])
                 ->treatNullLike(['enabled' => true])
                 ->addDefaultsIfNotSet()
+                ->fixXmlConfig('mailer')
                 ->children()
                     ->booleanNode('enabled')->defaultNull()->end()
                     ->booleanNode('auto_configure_mailers')->defaultTrue()->end()
@@ -53,6 +57,7 @@ class Configuration implements ConfigurationInterface
                 ->treatTrueLike(['enabled' => true])
                 ->treatNullLike(['enabled' => true])
                 ->addDefaultsIfNotSet()
+                ->fixXmlConfig('service')
                 ->children()
                     ->booleanNode('enabled')->defaultNull()->end()
                     ->arrayNode('services')
@@ -60,10 +65,16 @@ class Configuration implements ConfigurationInterface
                         ->prototype('array')
                             ->children()
                             ->scalarNode('name')
-                                ->validate()->ifNull()->thenInvalid()->end()
+                                ->validate()->ifNull()->thenInvalid('Missing value of name attribute')->end()
                             ->end()
-                            ->scalarNode('service')
-                                ->validate()->ifNull()->thenInvalid()->end()
+                            ->scalarNode('account_sid')
+                                ->validate()->ifNull()->thenInvalid('Missing value of service attribute')->end()
+                            ->end()
+                            ->scalarNode('auth_token')
+                                ->validate()->ifNull()->thenInvalid('Missing value of service attribute')->end()
+                            ->end()
+                            ->scalarNode('from_phone')
+                                ->validate()->ifNull()->thenInvalid('Missing value of service attribute')->end()
                             ->end()
                         ->end()
                     ->end()
