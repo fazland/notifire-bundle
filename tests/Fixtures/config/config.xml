@@ -25,7 +25,7 @@
         <framework:router resource="%kernel.root_dir%/config/routing.xml" />
     </framework:config>
 
-    <swiftmailer:config default-mailer="second_mailer">
+    <swiftmailer:config  default-mailer="second_mailer">
         <swiftmailer:mailer name="first_mailer" transport="smtp" host="%mailer_host%" />
         <swiftmailer:mailer name="second_mailer" />
     </swiftmailer:config>
