@@ -26,11 +26,6 @@ class NotifireExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
-        $notifireBuilderDefinition = $container->getDefinition('fazland.notifire.builder');
-
-        $notifireBuilderDefinition->addMethodCall('addNotification', ['email', Email::class]);
-        $notifireBuilderDefinition->addMethodCall('addNotification', ['sms', Sms::class]);
-
         if (isset($config['swiftmailer'])) {
             $swiftMailerConfig = $config['swiftmailer'];
             $container->setParameter('fazland.notifire.handler.swiftmailer.enabled', $swiftMailerConfig['enabled']);
