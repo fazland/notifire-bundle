@@ -20,6 +20,9 @@
             "Fazland\\NotifireBundle\\Tests\\": "tests/"
         }
     },
+    "config": {
+        "bin-dir": "bin/"
+    },
     "license": "MIT",
     "minimum-stability": "dev"
 }
