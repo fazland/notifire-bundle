@@ -18,14 +18,20 @@
         <service id="fazland.notifire.handler.swiftmailer.prototype" class="Fazland\Notifire\EventSubscriber\Email\SwiftMailerHandler" abstract="true" public="false">
             <argument />
             <argument />
-        </service>
-
-        <service id="fazland.notifire.handler.twilio.prototype" class="Fazland\Notifire\EventSubscriber\Sms\TwilioHandler" abstract="true" public="false">
-            <argument />
-            <argument />
+            <call method="setTwig">
+                <argument type="service" id="twig" on-invalid="null" />
+            </call>
         </service>
 
         <service id="fazland.notifire.handler.mailgun.prototype" class="Fazland\Notifire\EventSubscriber\Email\MailgunHandler" abstract="true" public="false">
+            <argument />
+            <argument />
+            <call method="setTwig">
+                <argument type="service" id="twig" on-invalid="null" />
+            </call>
+        </service>
+
+        <service id="fazland.notifire.handler.twilio.prototype" class="Fazland\Notifire\EventSubscriber\Sms\TwilioHandler" abstract="true" public="false">
             <argument />
             <argument />
         </service>
