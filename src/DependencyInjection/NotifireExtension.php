@@ -58,6 +58,8 @@ class NotifireExtension extends Extension
             'fazland.notifire.handler.swiftmailer.auto_configure_mailers',
             $config['auto_configure_mailers']
         );
+
+        $container->setParameter('fazland.notifire.handler.swiftmailer.mailers', $config['mailers']);
     }
 
     /**

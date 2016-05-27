@@ -2,6 +2,7 @@
 
 namespace Fazland\NotifireBundle\DependencyInjection\CompilerPass;
 
+use Fazland\NotifireBundle\Exception\SwiftMailerNotFoundException;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -35,20 +36,37 @@ class SwiftMailerConfigurationPass implements CompilerPassInterface
 
         if ($container->getParameter('fazland.notifire.handler.swiftmailer.auto_configure_mailers')) {
             foreach ($swiftMailerConfig['mailers'] as $name => $config) {
-                $swiftMailerHandlerDefinition = new DefinitionDecorator(
-                    'fazland.notifire.handler.swiftmailer.prototype'
-                );
+                $this->createSwiftMailerHandlerDefinition($container, $name);
+            }
+        } else {
+            foreach ($container->getParameter('fazland.notifire.handler.swiftmailer.mailers') as $mailerName) {
+                if (! isset($swiftMailerConfig['mailers'][$mailerName])) {
+                    throw new SwiftMailerNotFoundException("Couldn't find a SwiftMailer named $mailerName");
+                }
 
-                $swiftMailerHandlerDefinition
-                    ->setPublic(true)
-                    ->setAbstract(false)
-                    ->replaceArgument(0, new Reference("swiftmailer.mailer.$name"))
-                    ->replaceArgument(1, $name)
-                    ->addTag('kernel.event_subscriber')
-                ;
-
-                $container->setDefinition("fazland.notifire.handler.swiftmailer.$name", $swiftMailerHandlerDefinition);
+                $this->createSwiftMailerHandlerDefinition($container, $mailerName);
             }
         }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param string $name
+     */
+    public function createSwiftMailerHandlerDefinition(ContainerBuilder $container, $name)
+    {
+        $swiftMailerHandlerDefinition = new DefinitionDecorator(
+            'fazland.notifire.handler.swiftmailer.prototype'
+        );
+
+        $swiftMailerHandlerDefinition
+            ->setPublic(true)
+            ->setAbstract(false)
+            ->replaceArgument(0, new Reference("swiftmailer.mailer.$name"))
+            ->replaceArgument(1, $name)
+            ->addTag('kernel.event_subscriber')
+        ;
+
+        $container->setDefinition("fazland.notifire.handler.swiftmailer.$name", $swiftMailerHandlerDefinition);
     }
 }
