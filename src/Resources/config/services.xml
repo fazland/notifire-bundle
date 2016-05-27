@@ -14,6 +14,10 @@
         <service id="fazland.notifire.extension.core" class="Fazland\NotifireBundle\Extension\CoreExtension">
             <tag name="fazland.notifire.extension" />
         </service>
+
+        <service id="fazland.notifire.handler.not_notified_subscriber" class="Fazland\Notifire\EventSubscriber\NotNotifiedEventSubscriber">
+            <tag name="kernel.event_subscriber" />
+        </service>
         
         <service id="fazland.notifire.handler.swiftmailer.prototype" class="Fazland\Notifire\EventSubscriber\Email\SwiftMailerHandler" abstract="true" public="false">
             <argument />
