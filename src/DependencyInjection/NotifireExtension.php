@@ -75,6 +75,6 @@ class NotifireExtension extends Extension
     private function processMailgun(ContainerBuilder $container, array $config)
     {
         $container->setParameter('fazland.notifire.handler.mailgun.enabled', $config['enabled']);
-        $container->setParameter('fazland.notifire.handler.mailgun.services', $config['mailers']);
+        $container->setParameter('fazland.notifire.handler.mailgun.mailers', $config['mailers']);
     }
 }

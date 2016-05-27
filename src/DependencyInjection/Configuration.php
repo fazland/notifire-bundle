@@ -76,7 +76,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addMailgunSection($rootNode)
+    private function addMailgunSection(ArrayNodeDefinition $rootNode)
     {
         $rootNode
             ->children()
