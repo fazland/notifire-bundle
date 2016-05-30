@@ -55,17 +55,15 @@ class SwiftMailerConfigurationPass implements CompilerPassInterface
      */
     public function createSwiftMailerHandlerDefinition(ContainerBuilder $container, $name)
     {
-        $swiftMailerHandlerDefinition = new DefinitionDecorator(
-            'fazland.notifire.handler.swiftmailer.prototype'
-        );
+        $definition = clone $container->getDefinition('fazland.notifire.handler.swiftmailer.prototype');
 
-        $swiftMailerHandlerDefinition
+        $definition
             ->setPublic(true)
             ->setAbstract(false)
             ->replaceArgument(0, new Reference("swiftmailer.mailer.$name"))
             ->replaceArgument(1, $name)
         ;
 
-        $container->setDefinition("fazland.notifire.handler.swiftmailer.$name", $swiftMailerHandlerDefinition);
+        $container->setDefinition("fazland.notifire.handler.swiftmailer.$name", $definition);
     }
 }

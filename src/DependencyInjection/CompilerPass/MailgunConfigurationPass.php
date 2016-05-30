@@ -26,7 +26,7 @@ class MailgunConfigurationPass implements CompilerPassInterface
 
             $id = $this->createMailgunService($container, $parameters);
 
-            $definition = new DefinitionDecorator('fazland.notifire.handler.mailgun.prototype');
+            $definition = clone $container->getDefinition('fazland.notifire.handler.mailgun.prototype');
             $definition
                 ->setPublic(true)
                 ->setAbstract(false)

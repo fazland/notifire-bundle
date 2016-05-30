@@ -22,7 +22,7 @@ class RegisterHandlerPass implements CompilerPassInterface
             }
 
             $def->setLazy(true);
-            $definition->addMethodCall('addNotificationHandler', [new Reference($serviceId)]);
+            $definition->addMethodCall('addHandler', [new Reference($serviceId)]);
         }
     }
 }
