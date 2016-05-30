@@ -15,29 +15,28 @@
             <tag name="fazland.notifire.extension" />
         </service>
 
-        <service id="fazland.notifire.handler.not_notified_subscriber" class="Fazland\Notifire\EventSubscriber\NotNotifiedEventSubscriber">
-            <tag name="kernel.event_subscriber" />
-        </service>
-        
-        <service id="fazland.notifire.handler.swiftmailer.prototype" class="Fazland\Notifire\EventSubscriber\Email\SwiftMailerHandler" abstract="true" public="false">
+        <service id="fazland.notifire.handler.swiftmailer.prototype" class="Fazland\Notifire\Handler\Email\SwiftMailerHandler" abstract="true" public="false">
             <argument />
             <argument />
             <call method="setTwig">
                 <argument type="service" id="twig" on-invalid="null" />
             </call>
+            <tag name="fazland.notifire.handler" />
         </service>
 
-        <service id="fazland.notifire.handler.mailgun.prototype" class="Fazland\Notifire\EventSubscriber\Email\MailgunHandler" abstract="true" public="false">
+        <service id="fazland.notifire.handler.mailgun.prototype" class="Fazland\Notifire\Handler\Email\MailgunHandler" abstract="true" public="false">
             <argument />
             <argument />
             <call method="setTwig">
                 <argument type="service" id="twig" on-invalid="null" />
             </call>
+            <tag name="fazland.notifire.handler" />
         </service>
 
-        <service id="fazland.notifire.handler.twilio.prototype" class="Fazland\Notifire\EventSubscriber\Sms\TwilioHandler" abstract="true" public="false">
+        <service id="fazland.notifire.handler.twilio.prototype" class="Fazland\Notifire\Handler\Sms\TwilioHandler" abstract="true" public="false">
             <argument />
             <argument />
+            <tag name="fazland.notifire.handler" />
         </service>
     </services>
 </container>

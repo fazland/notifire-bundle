@@ -4,8 +4,10 @@ namespace Fazland\NotifireBundle;
 
 use Fazland\NotifireBundle\DependencyInjection\CompilerPass\ExtensionPass;
 use Fazland\NotifireBundle\DependencyInjection\CompilerPass\MailgunConfigurationPass;
+use Fazland\NotifireBundle\DependencyInjection\CompilerPass\RegisterHandlerPass;
 use Fazland\NotifireBundle\DependencyInjection\CompilerPass\SwiftMailerConfigurationPass;
 use Fazland\NotifireBundle\DependencyInjection\CompilerPass\TwilioConfigurationPass;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -20,6 +22,7 @@ class NotifireBundle extends Bundle
         $container->addCompilerPass(new SwiftMailerConfigurationPass());
         $container->addCompilerPass(new TwilioConfigurationPass());
         $container->addCompilerPass(new MailgunConfigurationPass());
+        $container->addCompilerPass(new RegisterHandlerPass(), PassConfig::TYPE_BEFORE_REMOVING);
     }
 
     /**

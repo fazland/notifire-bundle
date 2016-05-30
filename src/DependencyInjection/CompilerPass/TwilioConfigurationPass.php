@@ -38,7 +38,6 @@ class TwilioConfigurationPass implements CompilerPassInterface
                     $twilioAuthToken
                 )))
                 ->replaceArgument(1, $name)
-                ->addTag('kernel.event_subscriber')
             ;
 
             $container->setDefinition("fazland.notifire.handler.twilio.$name", $twilioHandlerDefinition);

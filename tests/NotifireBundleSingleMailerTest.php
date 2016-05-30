@@ -2,7 +2,7 @@
 
 namespace Fazland\NotifireBundle\Tests;
 
-use Fazland\Notifire\EventSubscriber\Email\SwiftMailerHandler;
+use Fazland\Notifire\Handler\Email\SwiftMailerHandler;
 use Fazland\NotifireBundle\Tests\Fixtures\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Tests\Functional\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;

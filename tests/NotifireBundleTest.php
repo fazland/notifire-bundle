@@ -2,9 +2,9 @@
 
 namespace Fazland\NotifireBundle\Tests;
 
-use Fazland\Notifire\EventSubscriber\Email\MailgunHandler;
-use Fazland\Notifire\EventSubscriber\Email\SwiftMailerHandler;
-use Fazland\Notifire\EventSubscriber\Sms\TwilioHandler;
+use Fazland\Notifire\Handler\Email\MailgunHandler;
+use Fazland\Notifire\Handler\Email\SwiftMailerHandler;
+use Fazland\Notifire\Handler\Sms\TwilioHandler;
 use Fazland\NotifireBundle\Tests\Fixtures\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Tests\Functional\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;

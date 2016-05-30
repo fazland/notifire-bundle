@@ -64,7 +64,6 @@ class SwiftMailerConfigurationPass implements CompilerPassInterface
             ->setAbstract(false)
             ->replaceArgument(0, new Reference("swiftmailer.mailer.$name"))
             ->replaceArgument(1, $name)
-            ->addTag('kernel.event_subscriber')
         ;
 
         $container->setDefinition("fazland.notifire.handler.swiftmailer.$name", $swiftMailerHandlerDefinition);

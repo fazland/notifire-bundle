@@ -32,7 +32,6 @@ class MailgunConfigurationPass implements CompilerPassInterface
                 ->setAbstract(false)
                 ->replaceArgument(0, new Reference($id))
                 ->replaceArgument(1, $domain)
-                ->addTag('kernel.event_subscriber')
             ;
 
             $container->setDefinition("fazland.notifire.handler.mailgun.$domain", $definition);
