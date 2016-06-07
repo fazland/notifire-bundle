@@ -35,6 +35,7 @@ class TwilioConfigurationPass implements CompilerPassInterface
                 ->setAbstract(false)
                 ->replaceArgument(0, new Reference($service))
                 ->replaceArgument(1, $name)
+                ->addMethodCall('setDefaultFrom', [$parameters['from_phone']])
             ;
 
             $container->setDefinition("fazland.notifire.handler.twilio.$name", $definition);
