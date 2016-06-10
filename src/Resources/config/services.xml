@@ -4,18 +4,26 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="fazland.notifire.builder.class">Fazland\NotifireBundle\Builder\ExtendableBuilder</parameter>
+        <parameter key="fazland.notifire.extension.core.class">Fazland\NotifireBundle\Extension\CoreExtension</parameter>
+        <parameter key="fazland.notifire.handler.swiftmailer.prototype.class">Fazland\Notifire\Handler\Email\SwiftMailerHandler</parameter>
+        <parameter key="fazland.notifire.handler.mailgun.prototype.class">Fazland\Notifire\Handler\Email\MailgunHandler</parameter>
+        <parameter key="fazland.notifire.handler.twilio.prototype.class">Fazland\Notifire\Handler\Sms\TwilioHandler</parameter>
+    </parameters>
+
     <services>
-        <service id="fazland.notifire.builder" class="Fazland\NotifireBundle\Builder\ExtendableBuilder">
+        <service id="fazland.notifire.builder" class="%fazland.notifire.builder.class%">
             <call method="setDispatcher">
                 <argument type="service" id="event_dispatcher" />
             </call>
         </service>
 
-        <service id="fazland.notifire.extension.core" class="Fazland\NotifireBundle\Extension\CoreExtension">
+        <service id="fazland.notifire.extension.core" class="%fazland.notifire.extension.core.class%">
             <tag name="fazland.notifire.extension" />
         </service>
 
-        <service id="fazland.notifire.handler.swiftmailer.prototype" class="Fazland\Notifire\Handler\Email\SwiftMailerHandler" abstract="true" public="false">
+        <service id="fazland.notifire.handler.swiftmailer.prototype" class="%fazland.notifire.handler.swiftmailer.prototype.class%" abstract="true" public="false">
             <argument />
             <argument />
             <call method="setTwig">
@@ -24,7 +32,7 @@
             <tag name="fazland.notifire.handler" />
         </service>
 
-        <service id="fazland.notifire.handler.mailgun.prototype" class="Fazland\Notifire\Handler\Email\MailgunHandler" abstract="true" public="false">
+        <service id="fazland.notifire.handler.mailgun.prototype" class="%fazland.notifire.handler.mailgun.prototype.class%" abstract="true" public="false">
             <argument />
             <argument />
             <call method="setTwig">
@@ -33,7 +41,7 @@
             <tag name="fazland.notifire.handler" />
         </service>
 
-        <service id="fazland.notifire.handler.twilio.prototype" class="Fazland\Notifire\Handler\Sms\TwilioHandler" abstract="true" public="false">
+        <service id="fazland.notifire.handler.twilio.prototype" class="%fazland.notifire.handler.twilio.prototype.class%" abstract="true" public="false">
             <argument />
             <argument />
             <tag name="fazland.notifire.handler" />
