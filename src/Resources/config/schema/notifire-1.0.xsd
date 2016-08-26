@@ -12,6 +12,7 @@
             <xsd:element name="swiftmailer" type="swiftmailer" minOccurs="0" maxOccurs="1" />
             <xsd:element name="twilio" type="twilio" minOccurs="0" maxOccurs="1" />
             <xsd:element name="mailgun" type="mailgun" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="default_variable_renderer" type="xsd:string" minOccurs="0" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>
 

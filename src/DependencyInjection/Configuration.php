@@ -23,9 +23,14 @@ class Configuration implements ConfigurationInterface
         $this->addMailgunSection($rootNode);
         $this->addTwilioSection($rootNode);
 
+        $this->addDefaultRendererSection($rootNode);
+
         return $treeBuilder;
     }
 
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     */
     private function addSwiftMailerSection(ArrayNodeDefinition $rootNode)
     {
         $rootNode
@@ -44,6 +49,9 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     */
     private function addTwilioSection(ArrayNodeDefinition $rootNode)
     {
         $rootNode
@@ -76,6 +84,9 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     */
     private function addMailgunSection(ArrayNodeDefinition $rootNode)
     {
         $rootNode
@@ -97,6 +108,19 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                     ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     */
+    private function addDefaultRendererSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+                ->scalarNode('default_variable_renderer')
                 ->end()
             ->end()
         ;

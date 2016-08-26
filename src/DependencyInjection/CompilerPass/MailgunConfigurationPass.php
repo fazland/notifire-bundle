@@ -38,6 +38,12 @@ class MailgunConfigurationPass implements CompilerPassInterface
         }
     }
 
+    /**
+     * @param ContainerBuilder $container
+     * @param array $parameters
+     *
+     * @return string
+     */
     private function createMailgunService(ContainerBuilder $container, array $parameters)
     {
         $apiKey = $parameters['api_key'];

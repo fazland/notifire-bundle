@@ -46,5 +46,17 @@
             <argument />
             <tag name="fazland.notifire.handler" />
         </service>
+
+        <service id="fazland.notifire.variable_renderer.factory" class="Fazland\NotifireBundle\VariableRenderer\Factory">
+        </service>
+
+        <service id="fazland.notifire.variable_renderer.mailgun" class="Fazland\NotifireBundle\VariableRenderer\MailgunRenderer">
+            <tag name="fazland.notifire.variable_renderer" />
+        </service>
+
+        <service id="fazland.notifire.twig_extension.variable_renderer_extension" class="Fazland\NotifireBundle\Twig\VariableRendererExtension">
+            <argument type="service" id="fazland.notifire.variable_renderer.factory" />
+            <tag name="twig.extension" />
+        </service>
     </services>
 </container>

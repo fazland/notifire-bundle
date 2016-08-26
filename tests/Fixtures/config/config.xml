@@ -23,6 +23,9 @@
         <framework:session storage-id="session.storage.filesystem" />
         <framework:csrf-protection enabled="true" />
         <framework:router resource="%kernel.root_dir%/config/routing.xml" />
+        <framework:templating>
+            <framework:engine>twig</framework:engine>
+        </framework:templating>
     </framework:config>
 
     <swiftmailer:config  default-mailer="second_mailer">
@@ -46,5 +49,6 @@
                 domain="example.org"
             />
         </notifire:mailgun>
+        <notifire:default_variable_renderer>mailgun</notifire:default_variable_renderer>
     </notifire:config>
 </container>

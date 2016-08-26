@@ -8,6 +8,7 @@ use Fazland\Notifire\Handler\Sms\TwilioHandler;
 use Fazland\NotifireBundle\Tests\Fixtures\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Tests\Functional\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Massimiliano Braglia <massimiliano.braglia@fazland.com>
@@ -28,6 +29,13 @@ class NotifireBundleTest extends WebTestCase
         $fs = new Filesystem();
         $fs->remove(__DIR__ . '/Fixtures/cache');
         $fs->remove(__DIR__ . '/Fixtures/logs');
+    }
+
+    public function provideRoutesAndExpectedResults()
+    {
+        return [
+            ['/test-mailgun-variable-renderer', 'mailgun_variable_render.txt'],
+        ];
     }
 
     public function testSwiftMailerHandlerConfiguration()
@@ -60,5 +68,19 @@ class NotifireBundleTest extends WebTestCase
         
         $this->assertNotEmpty($container->get("fazland.notifire.handler.mailgun.example.org"));
         $this->assertInstanceOf(MailgunHandler::class, $container->get("fazland.notifire.handler.mailgun.example.org"));
+    }
+
+    /**
+     * @dataProvider provideRoutesAndExpectedResults
+     */
+    public function testMailgunVariableRenderer($route, $resultFile)
+    {
+        $client = static::createClient();
+        $client->request(Request::METHOD_GET, $route);
+
+        $response = $client->getResponse();
+        $this->assertEquals(
+            file_get_contents(__DIR__ . '/Fixtures/expected/' . $resultFile), $response->getContent()
+        );
     }
 }
