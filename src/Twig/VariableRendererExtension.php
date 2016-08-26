@@ -43,7 +43,7 @@ class VariableRendererExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_Filter('render_variable', [$this, 'render'])
+            new \Twig_SimpleFilter('render_variable', [$this, 'render'])
         ];
     }
 
