@@ -7,6 +7,7 @@
     <parameters>
         <parameter key="fazland.notifire.builder.class">Fazland\NotifireBundle\Builder\ExtendableBuilder</parameter>
         <parameter key="fazland.notifire.extension.core.class">Fazland\NotifireBundle\Extension\CoreExtension</parameter>
+        <parameter key="fazland.notifire.converter.swift_mailer.class">Fazland\Notifire\Converter\SwiftMailerConverter</parameter>
         <parameter key="fazland.notifire.handler.swiftmailer.prototype.class">Fazland\Notifire\Handler\Email\SwiftMailerHandler</parameter>
         <parameter key="fazland.notifire.handler.mailgun.prototype.class">Fazland\Notifire\Handler\Email\MailgunHandler</parameter>
         <parameter key="fazland.notifire.handler.twilio.prototype.class">Fazland\Notifire\Handler\Sms\TwilioHandler</parameter>
@@ -23,6 +24,8 @@
         <service id="fazland.notifire.extension.core" class="%fazland.notifire.extension.core.class%">
             <tag name="fazland.notifire.extension" />
         </service>
+
+        <service id="fazland.notifire.converter.swift_mailer" class="%fazland.notifire.converter.swift_mailer.class%" />
 
         <service id="fazland.notifire.handler.swiftmailer.prototype" class="%fazland.notifire.handler.swiftmailer.prototype.class%" abstract="true" public="false">
             <argument />
