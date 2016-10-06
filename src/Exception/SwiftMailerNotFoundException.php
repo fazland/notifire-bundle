@@ -11,5 +11,4 @@ namespace Fazland\NotifireBundle\Exception;
  */
 class SwiftMailerNotFoundException extends \Exception
 {
-
 }

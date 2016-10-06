@@ -1,6 +1,6 @@
 <?php
 
-namespace Fazland\NotifireBundle\Tests;
+namespace Fazland\NotifireBundle\tests;
 
 use Fazland\Notifire\Handler\Email\SwiftMailerHandler;
 use Fazland\NotifireBundle\Tests\Fixtures\AppKernel;
@@ -23,8 +23,8 @@ class NotifireBundleSingleMailerTest extends WebTestCase
     public static function tearDownAfterClass()
     {
         $fs = new Filesystem();
-        $fs->remove(__DIR__ . '/Fixtures/cache');
-        $fs->remove(__DIR__ . '/Fixtures/logs');
+        $fs->remove(__DIR__.'/Fixtures/cache');
+        $fs->remove(__DIR__.'/Fixtures/logs');
     }
 
     public function testSwiftMailerHandlerConfiguration()

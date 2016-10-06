@@ -28,7 +28,7 @@ class AppKernel extends Kernel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function registerBundles()
     {
@@ -37,7 +37,7 @@ class AppKernel extends Kernel
             new SwiftmailerBundle(),
             new NotifireBundle(),
             new TwigBundle(),
-            new TestBundle\TestBundle()
+            new TestBundle\TestBundle(),
         ];
     }
 
@@ -49,9 +49,9 @@ class AppKernel extends Kernel
      */
     protected function initializeContainer()
     {
-        $class = $this->getContainerClass() . crc32($this->configFileName);
+        $class = $this->getContainerClass().crc32($this->configFileName);
 
-        $cache = new ConfigCache($this->getCacheDir() . '/' . $class . '.php', $this->debug);
+        $cache = new ConfigCache($this->getCacheDir().'/'.$class.'.php', $this->debug);
         $container = $this->buildContainer();
         $container->compile();
         $this->dumpContainer($cache, $container, $class, $this->getContainerBaseClass());
@@ -67,10 +67,10 @@ class AppKernel extends Kernel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__ . '/config/' . $this->configFileName);
+        $loader->load(__DIR__.'/config/'.$this->configFileName);
     }
 }

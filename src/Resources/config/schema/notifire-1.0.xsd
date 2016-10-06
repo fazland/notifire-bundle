@@ -9,48 +9,42 @@
 
     <xsd:complexType name="config">
         <xsd:sequence>
-            <xsd:element name="swiftmailer" type="swiftmailer" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="twilio" type="twilio" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="mailgun" type="mailgun" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="email" type="email" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="sms" type="sms" minOccurs="0" maxOccurs="1" />
             <xsd:element name="default_variable_renderer" type="xsd:string" minOccurs="0" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>
 
-    <xsd:complexType name="swiftmailer">
+    <xsd:complexType name="email">
         <xsd:sequence>
-            <xsd:element name="mailer" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="mailer" type="mailer" minOccurs="0" maxOccurs="unbounded" />
         </xsd:sequence>
 
         <xsd:attribute name="enabled" type="xsd:boolean" />
-        <xsd:attribute name="auto_configure_mailers" type="xsd:boolean" />
+        <xsd:attribute name="auto_configure_swiftmailer" type="xsd:boolean" />
     </xsd:complexType>
 
-    <xsd:complexType name="twilio">
+    <xsd:complexType name="mailer">
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="provider" type="xsd:string" />
+        <xsd:attribute name="mailer_name" type="xsd:string" />
+        <xsd:attribute name="api_key" type="xsd:string" />
+        <xsd:attribute name="domain" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="sms">
         <xsd:sequence>
             <xsd:element name="service" type="service" minOccurs="0" maxOccurs="unbounded" />
         </xsd:sequence>
 
         <xsd:attribute name="enabled" type="xsd:boolean" />
-        <xsd:attribute name="auto_configure_services" type="xsd:boolean" />
     </xsd:complexType>
     
     <xsd:complexType name="service">
         <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="provider" type="xsd:string" />
         <xsd:attribute name="account_sid" type="xsd:string" />
         <xsd:attribute name="auth_token" type="xsd:string" />
         <xsd:attribute name="from_phone" type="xsd:string" />
-    </xsd:complexType>
-
-    <xsd:complexType name="mailgun_mailer">
-        <xsd:attribute name="api_key" type="xsd:string" />
-        <xsd:attribute name="domain" type="xsd:string" />
-    </xsd:complexType>
-
-    <xsd:complexType name="mailgun">
-        <xsd:sequence>
-            <xsd:element name="mailer" type="mailgun_mailer" minOccurs="0" maxOccurs="unbounded" />
-        </xsd:sequence>
-
-        <xsd:attribute name="enabled" type="xsd:boolean" />
     </xsd:complexType>
 </xsd:schema>

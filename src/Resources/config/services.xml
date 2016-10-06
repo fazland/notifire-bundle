@@ -35,6 +35,7 @@
         <service id="fazland.notifire.handler.mailgun.prototype" class="%fazland.notifire.handler.mailgun.prototype.class%" abstract="true" public="false">
             <argument />
             <argument />
+            <argument />
             <call method="setTwig">
                 <argument type="service" id="twig" on-invalid="null" />
             </call>

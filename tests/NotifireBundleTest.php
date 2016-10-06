@@ -1,6 +1,6 @@
 <?php
 
-namespace Fazland\NotifireBundle\Tests;
+namespace Fazland\NotifireBundle\tests;
 
 use Fazland\Notifire\Handler\Email\MailgunHandler;
 use Fazland\Notifire\Handler\Email\SwiftMailerHandler;
@@ -27,8 +27,8 @@ class NotifireBundleTest extends WebTestCase
     public static function tearDownAfterClass()
     {
         $fs = new Filesystem();
-        $fs->remove(__DIR__ . '/Fixtures/cache');
-        $fs->remove(__DIR__ . '/Fixtures/logs');
+        $fs->remove(__DIR__.'/Fixtures/cache');
+        $fs->remove(__DIR__.'/Fixtures/logs');
     }
 
     public function provideRoutesAndExpectedResults()
@@ -42,12 +42,12 @@ class NotifireBundleTest extends WebTestCase
     {
         $client = static::createClient();
         $container = $client->getContainer();
-        
-        $this->assertNotEmpty($container->get("fazland.notifire.handler.swiftmailer.first_mailer"));
-        $this->assertInstanceOf(SwiftMailerHandler::class, $container->get("fazland.notifire.handler.swiftmailer.first_mailer"));
 
-        $this->assertNotEmpty($container->get("fazland.notifire.handler.swiftmailer.second_mailer"));
-        $this->assertInstanceOf(SwiftMailerHandler::class, $container->get("fazland.notifire.handler.swiftmailer.second_mailer"));
+        $this->assertNotEmpty($container->get('fazland.notifire.handler.swiftmailer.first_mailer'));
+        $this->assertInstanceOf(SwiftMailerHandler::class, $container->get('fazland.notifire.handler.swiftmailer.first_mailer'));
+
+        $this->assertNotEmpty($container->get('fazland.notifire.handler.swiftmailer.second_mailer'));
+        $this->assertInstanceOf(SwiftMailerHandler::class, $container->get('fazland.notifire.handler.swiftmailer.second_mailer'));
     }
 
     public function testTwilioServiceHandlerConfiguration()
@@ -55,7 +55,7 @@ class NotifireBundleTest extends WebTestCase
         $client = static::createClient();
         $container = $client->getContainer();
 
-        $name = $container->getParameter("twilio_name");
+        $name = $container->getParameter('twilio_name');
 
         $this->assertNotEmpty($container->get("fazland.notifire.handler.twilio.$name"));
         $this->assertInstanceOf(TwilioHandler::class, $container->get("fazland.notifire.handler.twilio.$name"));
@@ -65,9 +65,9 @@ class NotifireBundleTest extends WebTestCase
     {
         $client = static::createClient();
         $container = $client->getContainer();
-        
-        $this->assertNotEmpty($container->get("fazland.notifire.handler.mailgun.example.org"));
-        $this->assertInstanceOf(MailgunHandler::class, $container->get("fazland.notifire.handler.mailgun.example.org"));
+
+        $this->assertNotEmpty($container->get('fazland.notifire.handler.mailgun.example.org'));
+        $this->assertInstanceOf(MailgunHandler::class, $container->get('fazland.notifire.handler.mailgun.example.org'));
     }
 
     /**
@@ -76,7 +76,7 @@ class NotifireBundleTest extends WebTestCase
     public function testMailgunVariableRenderer($route, $resultFile)
     {
         $client = static::createClient();
-        $client->request(Request::METHOD_GET, $route);
+        $client->request('GET', $route);
 
         $response = $client->getResponse();
         $this->assertEquals(

@@ -6,14 +6,14 @@ use Fazland\Notifire\NotifireBuilder;
 
 /**
  * Represents a Notifire extension
- * Can be used to register notifications into the Notifire instance
+ * Can be used to register notifications into the Notifire instance.
  *
  * @author Alessandro Chitolina <alessandro.chitolina@fazland.com>
  */
 interface ExtensionInterface
 {
     /**
-     * Register notifications into the {@see NotifireBuilder}
+     * Register notifications into the {@see NotifireBuilder}.
      *
      * @param NotifireBuilder $builder
      */

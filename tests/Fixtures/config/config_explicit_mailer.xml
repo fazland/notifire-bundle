@@ -23,8 +23,8 @@
     </swiftmailer:config>
 
     <notifire:config>
-        <notifire:swiftmailer enabled="true" auto_configure_mailers="false">
-            <notifire:mailer>first_mailer</notifire:mailer>
-        </notifire:swiftmailer>
+        <notifire:email enabled="true" auto_configure_swiftmailer="false">
+            <notifire:mailer name="first_mailer" provider="swiftmailer" />
+        </notifire:email>
     </notifire:config>
 </container>

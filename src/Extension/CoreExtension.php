@@ -7,12 +7,12 @@ use Fazland\Notifire\Notification\Sms;
 use Fazland\Notifire\NotifireBuilder;
 
 /**
- * Holds the core extensions to be registered
+ * Holds the core extensions to be registered.
  */
 class CoreExtension implements ExtensionInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function register(NotifireBuilder $builder)
     {

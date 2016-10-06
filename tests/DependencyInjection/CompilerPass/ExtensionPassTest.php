@@ -1,6 +1,6 @@
 <?php
 
-namespace Fazland\NotifireBundle\Tests\DependencyInjection\CompilerPass;
+namespace Fazland\NotifireBundle\tests\DependencyInjection\CompilerPass;
 
 use Fazland\NotifireBundle\DependencyInjection\CompilerPass\ExtensionPass;
 use Prophecy\Argument;
@@ -28,14 +28,14 @@ class ExtensionPassTest extends \PHPUnit_Framework_TestCase
         $container->findTaggedServiceIds('fazland.notifire.extension')
             ->willReturn([
                 'extension.one' => [],
-                'extension.two' => []
+                'extension.two' => [],
             ]);
 
         $definition->addMethodCall('addExtension', Argument::that(function ($arg) {
-            return is_array($arg) && $arg[0] instanceof Reference && (string)$arg[0] === 'extension.one';
+            return is_array($arg) && $arg[0] instanceof Reference && (string) $arg[0] === 'extension.one';
         }))->shouldBeCalled();
         $definition->addMethodCall('addExtension', Argument::that(function ($arg) {
-            return is_array($arg) && $arg[0] instanceof Reference && (string)$arg[0] === 'extension.two';
+            return is_array($arg) && $arg[0] instanceof Reference && (string) $arg[0] === 'extension.two';
         }))->shouldBeCalled();
 
         $this->compilerPass->process($container->reveal());
