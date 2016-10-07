@@ -2,7 +2,7 @@
     "name": "fazland/notifire-bundle",
     "require": {
         "php": ">= 5.5",
-        "fazland/notifire": "~1.0@dev",
+        "fazland/notifire": "^0.2",
         "symfony/framework-bundle": "^2.7|^3.0"
     },
     "require-dev": {
