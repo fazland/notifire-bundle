@@ -70,7 +70,8 @@ class EmailConfigurationPass implements CompilerPassInterface
 
                 $handler = $container->register($serviceName, $container->getParameter('fazland.notifire.handler.composite.prototype.class'))
                     ->addArgument($name)
-                    ->addArgument(new Reference($strategy));
+                    ->addArgument(new Reference($strategy))
+                    ->addTag('fazland.notifire.handler');
 
                 foreach ($config['providers'] as $provider_name) {
                     $handler->addMethodCall('addNotificationHandler', [new Reference('fazland.notifire.handler.email.'.$provider_name)]);
