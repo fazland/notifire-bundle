@@ -4,6 +4,7 @@ namespace Fazland\NotifireBundle\tests;
 
 use Fazland\Notifire\Handler\Email\MailgunHandler;
 use Fazland\Notifire\Handler\Email\SwiftMailerHandler;
+use Fazland\Notifire\Handler\Sms\SkebbyHandler;
 use Fazland\Notifire\Handler\Sms\TwilioHandler;
 use Fazland\NotifireBundle\Tests\Fixtures\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Tests\Functional\WebTestCase;
@@ -59,6 +60,15 @@ class NotifireBundleTest extends WebTestCase
 
         $this->assertNotEmpty($container->get("fazland.notifire.handler.sms.$name"));
         $this->assertInstanceOf(TwilioHandler::class, $container->get("fazland.notifire.handler.sms.$name"));
+    }
+
+    public function testSkebbyHandlerConfiguration()
+    {
+        $client = static::createClient();
+        $container = $client->getContainer();
+
+        $this->assertNotEmpty($container->get("fazland.notifire.handler.sms.skebby"));
+        $this->assertInstanceOf(SkebbyHandler::class, $container->get("fazland.notifire.handler.sms.skebby"));
     }
 
     public function testMailgunHandlerConfiguration()

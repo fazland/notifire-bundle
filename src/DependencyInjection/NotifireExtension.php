@@ -71,8 +71,8 @@ class NotifireExtension extends Extension
         foreach ($config['services'] as $name => $service) {
             $serviceName = 'fazland.notifire.handler.sms.'.$name;
             if ($service['provider'] === 'twilio') {
-                $account_sid = $service['account_sid'];
-                $auth_token = $service['auth_token'];
+                $account_sid = $service['username'];
+                $auth_token = $service['password'];
 
                 $serviceId = $this->createTwilioService($container, $name, $account_sid, $auth_token);
 
@@ -82,7 +82,7 @@ class NotifireExtension extends Extension
                     ->setAbstract(false)
                     ->replaceArgument(0, new Reference($serviceId))
                     ->replaceArgument(1, $name)
-                    ->addMethodCall('setDefaultFrom', [$service['from_phone']])
+                    ->addMethodCall('setDefaultFrom', [$service['sender']])
                 ;
 
                 $container->setDefinition($serviceName, $definition);

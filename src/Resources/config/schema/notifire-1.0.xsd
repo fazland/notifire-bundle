@@ -47,9 +47,10 @@
     <xsd:complexType name="service">
         <xsd:attribute name="name" type="xsd:string" />
         <xsd:attribute name="provider" type="xsd:string" />
-        <xsd:attribute name="account_sid" type="xsd:string" />
-        <xsd:attribute name="auth_token" type="xsd:string" />
-        <xsd:attribute name="from_phone" type="xsd:string" />
+        <xsd:attribute name="username" type="xsd:string" />
+        <xsd:attribute name="password" type="xsd:string" />
+        <xsd:attribute name="sender" type="xsd:string" />
+        <xsd:attribute name="method" type="xsd:string" />
 
         <xsd:sequence>
             <xsd:element name="composite" type="composite" minOccurs="0" maxOccurs="1" />

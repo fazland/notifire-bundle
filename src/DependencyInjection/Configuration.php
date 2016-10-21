@@ -2,6 +2,7 @@
 
 namespace Fazland\NotifireBundle\DependencyInjection;
 
+use Fazland\SkebbyRestClient\Constant\SendMethods;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -105,9 +106,23 @@ class Configuration implements ConfigurationInterface
                                             ->end()
                                         ->end()
                                     ->end()
-                                    ->scalarNode('account_sid')->defaultNull()->end()
-                                    ->scalarNode('auth_token')->defaultNull()->end()
-                                    ->scalarNode('from_phone')->defaultNull()->end()
+                                    ->scalarNode('username')
+                                        ->info('Skebby username / Twilio account SID')
+                                        ->defaultNull()
+                                    ->end()
+                                    ->scalarNode('password')
+                                        ->info('Skebby password / Twilio auth token')
+                                        ->defaultNull()
+                                    ->end()
+                                    ->scalarNode('sender')
+                                        ->info('SMS Sender')
+                                        ->defaultNull()
+                                    ->end()
+                                    ->enumNode('method')
+                                        ->info('Skebby send method')
+                                        ->values(SendMethods::all())
+                                        ->defaultValue(SendMethods::BASIC)
+                                    ->end()
                                 ->end()
                                 ->validate()
                                     ->ifTrue(function ($value) {

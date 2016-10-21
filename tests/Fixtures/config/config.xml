@@ -39,9 +39,14 @@
         </notifire:email>
         <notifire:sms>
             <notifire:service provider="twilio" name="%twilio_name%"
-                              account_sid="%twilio_account_sid%"
-                              auth_token="%twilio_auth_token%"
-                              from_phone="%twilio_from_phone%" />
+                              username="%twilio_account_sid%"
+                              password="%twilio_auth_token%"
+                              sender="%twilio_from_phone%" />
+            <notifire:service provider="skebby" name="skebby"
+                              username="test_skebby_user"
+                              password="test_skebby_pwd"
+                              sender="Fazland"
+                              method="test_send_sms_basic" />
         </notifire:sms>
         <notifire:default_variable_renderer>mailgun</notifire:default_variable_renderer>
     </notifire:config>
