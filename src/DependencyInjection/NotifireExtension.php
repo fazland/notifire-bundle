@@ -2,6 +2,7 @@
 
 namespace Fazland\NotifireBundle\DependencyInjection;
 
+use Fazland\SkebbyRestClient\Client\Client as SkebbyRestClient;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -68,6 +69,7 @@ class NotifireExtension extends Extension
         }
 
         foreach ($config['services'] as $name => $service) {
+            $serviceName = 'fazland.notifire.handler.sms.'.$name;
             if ($service['provider'] === 'twilio') {
                 $account_sid = $service['account_sid'];
                 $auth_token = $service['auth_token'];
@@ -83,20 +85,65 @@ class NotifireExtension extends Extension
                     ->addMethodCall('setDefaultFrom', [$service['from_phone']])
                 ;
 
-                $container->setDefinition("fazland.notifire.handler.twilio.$name", $definition);
+                $container->setDefinition($serviceName, $definition);
+            } elseif ($service['provider'] === 'skebby') {
+                $serviceId = $this->createSkebbyClient($container, $name, $service['username'], $service['password'], $service['sender'], $service['method']);
+
+                $definition = clone $container->getDefinition('fazland.notifire.handler.skebby.prototype.prototype');
+                $definition
+                    ->setPublic(true)
+                    ->setAbstract(false)
+                    ->replaceArgument(0, new Reference($serviceId))
+                    ->replaceArgument(1, $name)
+                ;
+
+                $container->setDefinition($serviceName, $definition);
+            } elseif ($service['provider'] === 'composite') {
+                $config = $service['composite'];
+
+                if (empty($config['providers'])) {
+                    throw new InvalidConfigurationException('Empty provider list for sms service ' . $name);
+                }
+
+                $strategy = $config['strategy'];
+                if (in_array($strategy, ['rand'])) {
+                    $strategy = 'fazland.notifire.handler_choice_strategy.'.$strategy;
+                }
+
+                $handler = $container->register($serviceName, $container->getParameter('fazland.notifire.handler.composite.prototype.class'))
+                    ->addArgument($name)
+                    ->addArgument(new Reference($strategy));
+
+                foreach ($config['providers'] as $provider_name) {
+                    $handler->addMethodCall('addNotificationHandler', [new Reference('fazland.notifire.handler.sms.' . $provider_name)]);
+                }
             } else {
                 throw new InvalidConfigurationException('Unknown provider "'.$service['provider'].'"');
             }
         }
     }
 
-    private function createTwilioService(ContainerBuilder $container, $name, $sid, $token)
+    protected function createTwilioService(ContainerBuilder $container, $name, $sid, $token)
     {
         $definition = new Definition(\Services_Twilio::class, [$sid, $token]);
         $definition->addTag("fazland.notifire.twilio.$name");
 
         $definitionId = "fazland.notifire.twilio.service.$name";
         $container->setDefinition($definitionId, $definition);
+
+        return $definitionId;
+    }
+
+    protected function createSkebbyClient(ContainerBuilder $container, $name, $username, $password, $sender, $method)
+    {
+        $definitionId = 'fazland.notifire.skebby.client.'.$name;
+        $container->register($definitionId, SkebbyRestClient::class)
+            ->addArgument([
+                'username' => $username,
+                'password' => $password,
+                'sender' => $sender,
+                'method' => $method
+            ]);
 
         return $definitionId;
     }

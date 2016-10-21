@@ -26,8 +26,10 @@ class EmailConfigurationPass implements CompilerPassInterface
             $swift_mailers = $this->getSwiftMailers($container);
         }
 
-        $mailers = array_merge($swift_mailers, $container->getParameter('fazland.notifire.emails.mailers'));
+        $mailers = $container->hasParameter('fazland.notifire.emails.mailers') ? $container->getParameter('fazland.notifire.emails.mailers') : [];
+        $mailers = array_merge($swift_mailers, $mailers);
         foreach ($mailers as $name => $mailer) {
+            $serviceName = 'fazland.notifire.handler.email.'.$name;
             if ($mailer['provider'] === 'swiftmailer') {
                 $definition = clone $container->getDefinition('fazland.notifire.handler.swiftmailer.prototype');
                 $mailer_name = $mailer['mailer_name'] ?: $name;
@@ -39,7 +41,7 @@ class EmailConfigurationPass implements CompilerPassInterface
                     ->replaceArgument(1, $name)
                 ;
 
-                $container->setDefinition("fazland.notifire.handler.swiftmailer.$name", $definition);
+                $container->setDefinition($serviceName, $definition);
             } elseif ($mailer['provider'] === 'mailgun') {
                 $domain = $mailer['domain'];
 
@@ -51,10 +53,28 @@ class EmailConfigurationPass implements CompilerPassInterface
                     ->setAbstract(false)
                     ->replaceArgument(0, new Reference($id))
                     ->replaceArgument(1, $domain)
-                    ->replaceArgument(2, $name)
-                ;
+                    ->replaceArgument(2, $name);
 
-                $container->setDefinition("fazland.notifire.handler.mailgun.$domain", $definition);
+                $container->setDefinition($serviceName, $definition);
+            } elseif ($mailer['provider'] === 'composite') {
+                $config = $mailer['composite'];
+
+                if (empty($config['providers'])) {
+                    throw new InvalidConfigurationException('Empty provider list for mailer '.$name);
+                }
+
+                $strategy = $config['strategy'];
+                if (in_array($strategy, ['rand'])) {
+                    $strategy = 'fazland.notifire.handler_choice_strategy.'.$strategy;
+                }
+
+                $handler = $container->register($serviceName, $container->getParameter('fazland.notifire.handler.composite.prototype.class'))
+                    ->addArgument($name)
+                    ->addArgument(new Reference($strategy));
+
+                foreach ($config['providers'] as $provider_name) {
+                    $handler->addMethodCall('addNotificationHandler', [new Reference('fazland.notifire.handler.email.'.$provider_name)]);
+                }
             } else {
                 throw new InvalidConfigurationException('Unknown provider "'.$mailer['provider'].'"');
             }
@@ -79,7 +99,7 @@ class EmailConfigurationPass implements CompilerPassInterface
         return $mailers;
     }
 
-    private function createMailgunService(ContainerBuilder $container, array $parameters)
+    protected function createMailgunService(ContainerBuilder $container, array $parameters)
     {
         $apiKey = $parameters['api_key'];
         $domain = $parameters['domain'];

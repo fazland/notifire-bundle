@@ -30,6 +30,10 @@
         <xsd:attribute name="mailer_name" type="xsd:string" />
         <xsd:attribute name="api_key" type="xsd:string" />
         <xsd:attribute name="domain" type="xsd:string" />
+
+        <xsd:sequence>
+            <xsd:element name="composite" type="composite" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="sms">
@@ -46,5 +50,17 @@
         <xsd:attribute name="account_sid" type="xsd:string" />
         <xsd:attribute name="auth_token" type="xsd:string" />
         <xsd:attribute name="from_phone" type="xsd:string" />
+
+        <xsd:sequence>
+            <xsd:element name="composite" type="composite" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="composite">
+        <xsd:sequence>
+            <xsd:element name="provider" type="xsd:string" minOccurs="1" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="strategy" type="xsd:string" />
     </xsd:complexType>
 </xsd:schema>

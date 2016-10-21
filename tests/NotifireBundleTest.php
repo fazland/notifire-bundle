@@ -43,11 +43,11 @@ class NotifireBundleTest extends WebTestCase
         $client = static::createClient();
         $container = $client->getContainer();
 
-        $this->assertNotEmpty($container->get('fazland.notifire.handler.swiftmailer.first_mailer'));
-        $this->assertInstanceOf(SwiftMailerHandler::class, $container->get('fazland.notifire.handler.swiftmailer.first_mailer'));
+        $this->assertNotEmpty($container->get('fazland.notifire.handler.email.first_mailer'));
+        $this->assertInstanceOf(SwiftMailerHandler::class, $container->get('fazland.notifire.handler.email.first_mailer'));
 
-        $this->assertNotEmpty($container->get('fazland.notifire.handler.swiftmailer.second_mailer'));
-        $this->assertInstanceOf(SwiftMailerHandler::class, $container->get('fazland.notifire.handler.swiftmailer.second_mailer'));
+        $this->assertNotEmpty($container->get('fazland.notifire.handler.email.second_mailer'));
+        $this->assertInstanceOf(SwiftMailerHandler::class, $container->get('fazland.notifire.handler.email.second_mailer'));
     }
 
     public function testTwilioServiceHandlerConfiguration()
@@ -57,8 +57,8 @@ class NotifireBundleTest extends WebTestCase
 
         $name = $container->getParameter('twilio_name');
 
-        $this->assertNotEmpty($container->get("fazland.notifire.handler.twilio.$name"));
-        $this->assertInstanceOf(TwilioHandler::class, $container->get("fazland.notifire.handler.twilio.$name"));
+        $this->assertNotEmpty($container->get("fazland.notifire.handler.sms.$name"));
+        $this->assertInstanceOf(TwilioHandler::class, $container->get("fazland.notifire.handler.sms.$name"));
     }
 
     public function testMailgunHandlerConfiguration()
@@ -66,8 +66,8 @@ class NotifireBundleTest extends WebTestCase
         $client = static::createClient();
         $container = $client->getContainer();
 
-        $this->assertNotEmpty($container->get('fazland.notifire.handler.mailgun.example.org'));
-        $this->assertInstanceOf(MailgunHandler::class, $container->get('fazland.notifire.handler.mailgun.example.org'));
+        $this->assertNotEmpty($container->get('fazland.notifire.handler.email.mailgun_example'));
+        $this->assertInstanceOf(MailgunHandler::class, $container->get('fazland.notifire.handler.email.mailgun_example'));
     }
 
     /**

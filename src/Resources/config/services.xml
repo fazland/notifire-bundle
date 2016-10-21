@@ -6,11 +6,19 @@
 
     <parameters>
         <parameter key="fazland.notifire.builder.class">Fazland\NotifireBundle\Builder\ExtendableBuilder</parameter>
+
         <parameter key="fazland.notifire.extension.core.class">Fazland\NotifireBundle\Extension\CoreExtension</parameter>
+
+        <parameter key="fazland.notifire.handler_choice_strategy.rand.class">Fazland\Notifire\HandlerSelectorStrategy\RandStrategy</parameter>
+
         <parameter key="fazland.notifire.converter.swift_mailer.class">Fazland\Notifire\Converter\SwiftMailerConverter</parameter>
+
         <parameter key="fazland.notifire.handler.swiftmailer.prototype.class">Fazland\Notifire\Handler\Email\SwiftMailerHandler</parameter>
         <parameter key="fazland.notifire.handler.mailgun.prototype.class">Fazland\Notifire\Handler\Email\MailgunHandler</parameter>
         <parameter key="fazland.notifire.handler.twilio.prototype.class">Fazland\Notifire\Handler\Sms\TwilioHandler</parameter>
+        <parameter key="fazland.notifire.handler.skebby.prototype.class">Fazland\Notifire\Handler\Sms\SkebbyHandler</parameter>
+        <parameter key="fazland.notifire.handler.composite.prototype.class">Fazland\Notifire\Handler\CompositeNotificationHandler</parameter>
+
         <parameter key="fazland.notifire.processor.twig_processor.class">Fazland\Notifire\EventListener\TwigProcessor</parameter>
     </parameters>
 
@@ -27,6 +35,8 @@
 
         <service id="fazland.notifire.converter.swift_mailer" class="%fazland.notifire.converter.swift_mailer.class%" />
 
+        <service id="fazland.notifire.handler_choice_strategy.rand" class="%fazland.notifire.handler_choice_strategy.rand.class%" />
+
         <service id="fazland.notifire.handler.swiftmailer.prototype" class="%fazland.notifire.handler.swiftmailer.prototype.class%" abstract="true" public="false">
             <argument />
             <argument />
@@ -41,6 +51,12 @@
         </service>
 
         <service id="fazland.notifire.handler.twilio.prototype" class="%fazland.notifire.handler.twilio.prototype.class%" abstract="true" public="false">
+            <argument />
+            <argument />
+            <tag name="fazland.notifire.handler" />
+        </service>
+
+        <service id="fazland.notifire.handler.skebby.prototype" class="%fazland.notifire.handler.skebby.prototype.class%" abstract="true" public="false">
             <argument />
             <argument />
             <tag name="fazland.notifire.handler" />

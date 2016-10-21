@@ -2,6 +2,7 @@
 
 namespace Fazland\NotifireBundle\tests;
 
+use Fazland\Notifire\Handler\CompositeNotificationHandler;
 use Fazland\Notifire\Handler\Email\SwiftMailerHandler;
 use Fazland\NotifireBundle\Tests\Fixtures\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Tests\Functional\WebTestCase;
@@ -10,11 +11,11 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * @author Massimiliano Braglia <massimiliano.braglia@fazland.com>
  */
-class NotifireBundleSingleMailerTest extends WebTestCase
+class NotifireBundleCompositeTest extends WebTestCase
 {
     protected static function createKernel(array $options = array())
     {
-        return new AppKernel('test', true, 'config_explicit_mailer.xml');
+        return new AppKernel('test', true, 'config_composite.xml');
     }
 
     /**
@@ -27,14 +28,12 @@ class NotifireBundleSingleMailerTest extends WebTestCase
         $fs->remove(__DIR__.'/Fixtures/logs');
     }
 
-    public function testSwiftMailerHandlerConfiguration()
+    public function testCompositeConfiguration()
     {
         $client = static::createClient();
         $container = $client->getContainer();
 
-        $this->assertNotEmpty($container->get('fazland.notifire.handler.email.first_mailer'));
-        $this->assertInstanceOf(SwiftMailerHandler::class, $container->get('fazland.notifire.handler.email.first_mailer'));
-
-        $this->assertFalse($container->has('fazland.notifire.handler.email.second_mailer'));
+        $this->assertNotEmpty($container->get('fazland.notifire.handler.email.default'));
+        $this->assertInstanceOf(CompositeNotificationHandler::class, $container->get('fazland.notifire.handler.email.default'));
     }
 }
