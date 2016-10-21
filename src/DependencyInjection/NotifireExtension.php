@@ -89,7 +89,7 @@ class NotifireExtension extends Extension
             } elseif ($service['provider'] === 'skebby') {
                 $serviceId = $this->createSkebbyClient($container, $name, $service['username'], $service['password'], $service['sender'], $service['method']);
 
-                $definition = clone $container->getDefinition('fazland.notifire.handler.skebby.prototype.prototype');
+                $definition = clone $container->getDefinition('fazland.notifire.handler.skebby.prototype');
                 $definition
                     ->setPublic(true)
                     ->setAbstract(false)
