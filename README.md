@@ -8,7 +8,7 @@ Requirements
 ------------
 - php >= 5.5.0
 - symfony/symfony >= 2.7
-- fazland/notifire >= 1.0
+- fazland/notifire
 
 Installation
 ------------
@@ -35,44 +35,36 @@ public function registerBundles()
 The configuration of Notifire Bundle is simple, just include in your `app/config/config.xml` (or equivalent) something like the following:
 ```xml
 <notifire:config>
-    <notifire:swiftmailer enabled="true" auto_configure_mailers="true" />
-    <notifire:twilio enabled="true">
-        <notifire:service
-            name="%twilio_name%"
-            account_sid="%twilio_account_sid%"
-            auth_token="%twilio_auth_token%"
-            from_phone="%twilio_from_phone%"
-        />
-    </notifire:twilio>
-    <notifire:mailgun enabled="true">
-        <notifire:mailer
-            api_key="api_key"
-            domain="example.org"
-        />
-    </notifire:mailgun>
+    <notifire:email auto_configure_swiftmailer="true">
+        <notifire:mailer name="mailgun_example"
+            provider="mailgun" api_key="api_key" domain="example.org" />
+    </notifire:email>
+    <notifire:sms>
+        <notifire:service name="default_sms" provider="twilio"
+                          username="%twilio_account_sid%"
+                          password="%twilio_auth_token%"
+                          sender="%twilio_from_phone%" />
+    </notifire:sms>
 </notifire:config>
 ```
 
 YAML version:
 ```yml
 notifire:
-    swiftmailer:
-        enabled: true
-        auto_configure_mailers: true
-    twilio:
-        enabled: true
+    email:
+        auto_configure_swiftmailer: true
+        mailers:
+            mailgun_example:
+                provider: mailgun
+                api_key: api_key
+                domain: example.org
+    sms:
         services:
-            service:
-                name: '%twilio_name%'
+            default_sms:
+                provider: twilio
                 account_sid: '%twilio_account_sid%'
                 auth_token: '%twilio_auth_token%'
                 from_phone: '%twilio_from_phone%'
-    mailgun:
-        enabled: true
-        mailers:
-            mailer:
-                domain: '%mailgun_domain%'
-                api_key: '%mailgun_api_key%'
                 
 ```
 
@@ -82,20 +74,22 @@ This configuration snippet registers in `Notifire` all your existing [SwiftMaile
 If you want to register by instance only a set of SwiftMailer` mailers just use:
 ```xml
 <!-- ... -->
-    <notifire:swiftmailer enabled="true" auto_configure_mailers="false">
-        <notifire:mailer>%your_mailer%</notifire:mailer>
-    </notifire:swiftmailer>
+    <notifire:email auto_configure_swiftmailer="false">
+        <notifire:mailer name="y_mail" 
+            provider="swiftmailer" mailer_name="%your_mailer%" />
+    </notifire:email>
 <!-- ... -->
 ```
 or in YAML:
 
 ```yml
 # ...
-    swiftmailer:
-        enabled: true
-        auto_configure_mailers: false
+    email:
+        auto_configure_swiftmailer: false
         mailers:
-            mailer: '%your_mailer%'
+            y_mail:
+                provider: swiftmailer
+                mailer_name: '%your_mailer%'
 # ... 
 ```
 
@@ -103,10 +97,8 @@ This configuration will provide `Notifire` configured and set in your container 
 
 As usual, just create an e-mail with `Notifire::email()` and send it:
 ```php
-$email = Notifire::email([
-    'provider' => 'swiftmailer',
-    'mailer' => 'default'
-]);
+// Use 'default' mailer
+$email = Notifire::email('default');
 
 $email
     ->addFrom('test@fazland.com')

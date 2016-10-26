@@ -2,11 +2,11 @@
     "name": "fazland/notifire-bundle",
     "require": {
         "php": ">= 5.5",
-        "fazland/notifire": "1.0.x-dev@dev",
+        "fazland/notifire": "^0.3",
         "symfony/framework-bundle": "^2.7|^3.0"
     },
     "require-dev": {
-        "fazland/skebby-rest-client": "dev-master",
+        "fazland/skebby-rest-client": "^0.1",
         "mailgun/mailgun-php": "^2.0",
         "phpunit/phpunit": "^4.8|^5.0",
         "symfony/browser-kit": "^2.7|^3.0",
