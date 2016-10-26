@@ -5,9 +5,7 @@ namespace Fazland\NotifierBundle\Tests\DependencyInjection\CompilerPass;
 use Fazland\Notifire\Handler\Email\SwiftMailerHandler;
 use Fazland\NotifireBundle\DependencyInjection\CompilerPass\EmailConfigurationPass;
 use Prophecy\Argument;
-use Symfony\Bundle\SwiftmailerBundle\DependencyInjection\SwiftmailerExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 class EmailConfigurationPassTest extends \PHPUnit_Framework_TestCase
@@ -52,12 +50,12 @@ class EmailConfigurationPassTest extends \PHPUnit_Framework_TestCase
         $this->container->loadFromExtension('swiftmailer', [
             'mailers' => [
                 'first' => [
-                    'transport' => 'smtp'
+                    'transport' => 'smtp',
                 ],
                 'second' => [
-                    'transport' => 'custom_transport'
-                ]
-            ]
+                    'transport' => 'custom_transport',
+                ],
+            ],
         ]);
 
         $this->container->register('fazland.notifire.handler.swiftmailer.prototype', SwiftMailerHandler::class)

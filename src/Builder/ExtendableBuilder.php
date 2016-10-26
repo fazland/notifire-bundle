@@ -2,8 +2,8 @@
 
 namespace Fazland\NotifireBundle\Builder;
 
-use Fazland\NotifireBundle\Extension\ExtensionInterface;
 use Fazland\Notifire\NotifireBuilder;
+use Fazland\NotifireBundle\Extension\ExtensionInterface;
 
 class ExtendableBuilder extends NotifireBuilder
 {

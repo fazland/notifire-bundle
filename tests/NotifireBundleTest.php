@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class NotifireBundleTest extends WebTestCase
 {
-    protected static function createKernel(array $options = array())
+    protected static function createKernel(array $options = [])
     {
         return new AppKernel('test', true);
     }
@@ -67,8 +67,8 @@ class NotifireBundleTest extends WebTestCase
         $client = static::createClient();
         $container = $client->getContainer();
 
-        $this->assertNotEmpty($container->get("fazland.notifire.handler.sms.skebby"));
-        $this->assertInstanceOf(SkebbyHandler::class, $container->get("fazland.notifire.handler.sms.skebby"));
+        $this->assertNotEmpty($container->get('fazland.notifire.handler.sms.skebby'));
+        $this->assertInstanceOf(SkebbyHandler::class, $container->get('fazland.notifire.handler.sms.skebby'));
     }
 
     public function testMailgunHandlerConfiguration()
@@ -90,7 +90,7 @@ class NotifireBundleTest extends WebTestCase
 
         $response = $client->getResponse();
         $this->assertEquals(
-            file_get_contents(__DIR__ . '/Fixtures/expected/' . $resultFile), $response->getContent()
+            file_get_contents(__DIR__.'/Fixtures/expected/'.$resultFile), $response->getContent()
         );
     }
 }

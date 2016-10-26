@@ -7,14 +7,14 @@ namespace Fazland\NotifireBundle\VariableRenderer;
  */
 class MailgunRenderer implements VariableRendererInterface
 {
-    const PREFIX = "recipient.";
+    const PREFIX = 'recipient.';
 
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-        return "mailgun";
+        return 'mailgun';
     }
 
     /**
@@ -22,6 +22,6 @@ class MailgunRenderer implements VariableRendererInterface
      */
     public function render($variableName)
     {
-        return "%" . static::PREFIX . $variableName . "%";
+        return '%'.static::PREFIX.$variableName.'%';
     }
 }

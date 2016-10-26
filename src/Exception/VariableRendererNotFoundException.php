@@ -7,5 +7,4 @@ namespace Fazland\NotifireBundle\Exception;
  */
 class VariableRendererNotFoundException extends \Exception
 {
-
 }

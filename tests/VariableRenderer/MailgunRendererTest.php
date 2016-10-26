@@ -13,8 +13,8 @@ class MailgunRendererTest extends \PHPUnit_Framework_TestCase
     {
         $renderer = new MailgunRenderer();
 
-        $variableName = "variable_name";
-        $expected = "%recipient.variable_name%";
+        $variableName = 'variable_name';
+        $expected = '%recipient.variable_name%';
 
         $this->assertEquals($expected, $renderer->render($variableName));
     }

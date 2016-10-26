@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class VariableRendererPass implements CompilerPassInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {

@@ -32,7 +32,7 @@ class VariableRendererPassTest extends \PHPUnit_Framework_TestCase
         $container->findTaggedServiceIds('fazland.notifire.variable_renderer')
             ->willReturn([
                 'renderer.one' => [],
-                'renderer.two' => []
+                'renderer.two' => [],
             ])
         ;
 
@@ -44,7 +44,6 @@ class VariableRendererPassTest extends \PHPUnit_Framework_TestCase
         $definition->addMethodCall('addRenderer', Argument::that(function ($arg) {
             return is_array($arg) && $arg[0] instanceof Reference && (string)$arg[0] === 'renderer.two';
         }))->shouldBeCalled();
-
 
         $container->getDefinition('fazland.notifire.variable_renderer.factory')
             ->willReturn($definition->reveal())

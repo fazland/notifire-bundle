@@ -102,7 +102,7 @@ class NotifireExtension extends Extension
                 $config = $service['composite'];
 
                 if (empty($config['providers'])) {
-                    throw new InvalidConfigurationException('Empty provider list for sms service ' . $name);
+                    throw new InvalidConfigurationException('Empty provider list for sms service '.$name);
                 }
 
                 $strategy = $config['strategy'];
@@ -116,7 +116,7 @@ class NotifireExtension extends Extension
                     ->addTag('fazland.notifire.handler');
 
                 foreach ($config['providers'] as $provider_name) {
-                    $handler->addMethodCall('addNotificationHandler', [new Reference('fazland.notifire.handler.sms.' . $provider_name)]);
+                    $handler->addMethodCall('addNotificationHandler', [new Reference('fazland.notifire.handler.sms.'.$provider_name)]);
                 }
             } else {
                 throw new InvalidConfigurationException('Unknown provider "'.$service['provider'].'"');
@@ -143,7 +143,7 @@ class NotifireExtension extends Extension
                 'username' => $username,
                 'password' => $password,
                 'sender' => $sender,
-                'method' => $method
+                'method' => $method,
             ]);
 
         return $definitionId;

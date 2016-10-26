@@ -12,7 +12,7 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class NotifireBundleSingleMailerTest extends WebTestCase
 {
-    protected static function createKernel(array $options = array())
+    protected static function createKernel(array $options = [])
     {
         return new AppKernel('test', true, 'config_explicit_mailer.xml');
     }

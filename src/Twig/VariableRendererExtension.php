@@ -43,7 +43,7 @@ class VariableRendererExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('render_variable', [$this, 'render'])
+            new \Twig_SimpleFilter('render_variable', [$this, 'render']),
         ];
     }
 
@@ -55,7 +55,7 @@ class VariableRendererExtension extends \Twig_Extension
      *
      * @throws VariableRendererNotFoundException
      */
-    public function render($variable, $rendererName = "")
+    public function render($variable, $rendererName = '')
     {
         $targetRenderer = null;
 
@@ -64,8 +64,9 @@ class VariableRendererExtension extends \Twig_Extension
         }
 
         if (empty($targetRenderer)) {
-            throw new VariableRendererNotFoundException("No renderer specified");
+            throw new VariableRendererNotFoundException('No renderer specified');
         }
+
         return $this->factory
             ->get(empty($rendererName) ? $this->defaultRenderer : $rendererName)
             ->render($variable)

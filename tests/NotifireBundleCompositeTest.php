@@ -3,7 +3,6 @@
 namespace Fazland\NotifireBundle\tests;
 
 use Fazland\Notifire\Handler\CompositeNotificationHandler;
-use Fazland\Notifire\Handler\Email\SwiftMailerHandler;
 use Fazland\NotifireBundle\Tests\Fixtures\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Tests\Functional\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;
@@ -13,7 +12,7 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class NotifireBundleCompositeTest extends WebTestCase
 {
-    protected static function createKernel(array $options = array())
+    protected static function createKernel(array $options = [])
     {
         return new AppKernel('test', true, 'config_composite.xml');
     }

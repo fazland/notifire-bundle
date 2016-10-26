@@ -3,12 +3,12 @@
 namespace Fazland\NotifireBundle\DependencyInjection\CompilerPass;
 
 use Mailgun\Mailgun;
+use Symfony\Bundle\SwiftmailerBundle\DependencyInjection\Configuration as SwiftMailerConfiguration;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Bundle\SwiftmailerBundle\DependencyInjection\Configuration as SwiftMailerConfiguration;
 
 class EmailConfigurationPass implements CompilerPassInterface
 {
