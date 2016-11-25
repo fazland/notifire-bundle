@@ -81,61 +81,66 @@ class Configuration implements ConfigurationInterface
 
     private function addSmsSection(ArrayNodeDefinition $rootNode)
     {
-        $rootNode
+        $smsService = $rootNode
             ->children()
                 ->arrayNode('sms')
                     ->fixXmlConfig('service')
                     ->canBeEnabled()
                     ->children()
-                        ->arrayNode('services')
-                            ->useAttributeAsKey('name')
-                            ->prototype('array')
-                                ->children()
-                                    ->enumNode('provider')
-                                        ->isRequired()
-                                        ->values(['twilio', 'skebby', 'composite'])
-                                    ->end()
-                                    ->arrayNode('composite')
-                                        ->addDefaultsIfNotSet()
-                                        ->children()
-                                            ->arrayNode('providers')
-                                                ->prototype('scalar')->end()
-                                            ->end()
-                                            ->scalarNode('strategy')
-                                                ->defaultValue('rand')
-                                            ->end()
-                                        ->end()
-                                    ->end()
-                                    ->scalarNode('username')
-                                        ->info('Skebby username / Twilio account SID')
-                                        ->defaultNull()
-                                    ->end()
-                                    ->scalarNode('password')
-                                        ->info('Skebby password / Twilio auth token')
-                                        ->defaultNull()
-                                    ->end()
-                                    ->scalarNode('sender')
-                                        ->info('SMS Sender')
-                                        ->defaultNull()
-                                    ->end()
-                                    ->enumNode('method')
-                                        ->info('Skebby send method')
-                                        ->values(SendMethods::all())
-                                        ->defaultValue(SendMethods::BASIC)
-                                    ->end()
-                                ->end()
-                                ->validate()
-                                    ->ifTrue(function ($value) {
-                                        return false;
-                                    })
-                                    ->thenInvalid('Invalid SMS service configuration')
-                                ->end()
-                            ->end()
-                        ->end()
+        ;
+
+        $service = $smsService
+            ->arrayNode('services')
+                ->useAttributeAsKey('name')
+                ->prototype('array')
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            return false;
+                        })
+                        ->thenInvalid('Invalid SMS service configuration')
+                    ->end()
+                    ->children();
+        ;
+
+        $service
+            ->enumNode('provider')
+                ->isRequired()
+                ->values(['twilio', 'skebby', 'composite'])
+            ->end()
+            ->arrayNode('composite')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->arrayNode('providers')
+                        ->prototype('scalar')->end()
+                    ->end()
+                    ->scalarNode('strategy')
+                        ->defaultValue('rand')
                     ->end()
                 ->end()
             ->end()
+            ->scalarNode('username')
+                ->info('Skebby username / Twilio account SID')
+                ->defaultNull()
+            ->end()
+            ->scalarNode('password')
+                ->info('Skebby password / Twilio auth token')
+                ->defaultNull()
+            ->end()
+            ->scalarNode('sender')
+                ->info('SMS Sender')
+                ->defaultNull()
+            ->end()
         ;
+
+        if (class_exists(SendMethods::class)) {
+            $service
+                ->enumNode('method')
+                    ->info('Skebby send method')
+                    ->values(SendMethods::all())
+                    ->defaultValue(SendMethods::BASIC)
+                ->end()
+            ;
+        }
     }
 
     /**
