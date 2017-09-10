@@ -3,6 +3,7 @@
 namespace Fazland\NotifireBundle\DependencyInjection\CompilerPass;
 
 use Mailgun\Mailgun;
+use \SendGrid;
 use Symfony\Bundle\SwiftmailerBundle\DependencyInjection\Configuration as SwiftMailerConfiguration;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
@@ -56,6 +57,18 @@ class EmailConfigurationPass implements CompilerPassInterface
                     ->replaceArgument(2, $name);
 
                 $container->setDefinition($serviceName, $definition);
+            } elseif ($mailer['provider'] === 'sendgrid') {
+                $domain = $mailer['domain'];
+                $id = $this->createSendGridService($container, $mailer);
+
+                $definition = clone $container->getDefinition('fazland.notifire.handler.sendgrid.prototype');
+                $definition
+                    ->setPublic(true)
+                    ->setAbstract(false)
+                    ->replaceArgument(0, new Reference($id))
+                    ->replaceArgument(1, $domain)
+                    ->replaceArgument(2, $name);
+                $container->setDefinition($serviceName, $definition);
             } elseif ($mailer['provider'] === 'composite') {
                 $config = $mailer['composite'];
 
@@ -106,6 +119,17 @@ class EmailConfigurationPass implements CompilerPassInterface
         $domain = $parameters['domain'];
 
         $container->register(($id = 'fazland.notifire.mailgun.'.$domain), Mailgun::class)
+            ->setArguments([$apiKey]);
+
+        return $id;
+    }
+
+    protected function createSendGridService(ContainerBuilder $container, array $parameters)
+    {
+        $apiKey = $parameters['api_key'];
+        $domain = $parameters['domain'];
+
+        $container->register(($id = 'fazland.notifire.sendgrid.'.$domain), SendGrid::class)
             ->setArguments([$apiKey]);
 
         return $id;
