@@ -15,6 +15,7 @@
 
         <parameter key="fazland.notifire.handler.swiftmailer.prototype.class">Fazland\Notifire\Handler\Email\SwiftMailerHandler</parameter>
         <parameter key="fazland.notifire.handler.mailgun.prototype.class">Fazland\Notifire\Handler\Email\MailgunHandler</parameter>
+        <parameter key="fazland.notifire.handler.sendgrid.prototype.class">Fazland\Notifire\Handler\Email\SendGridHandler</parameter>
         <parameter key="fazland.notifire.handler.twilio.prototype.class">Fazland\Notifire\Handler\Sms\TwilioHandler</parameter>
         <parameter key="fazland.notifire.handler.skebby.prototype.class">Fazland\Notifire\Handler\Sms\SkebbyHandler</parameter>
         <parameter key="fazland.notifire.handler.composite.prototype.class">Fazland\Notifire\Handler\CompositeNotificationHandler</parameter>
@@ -44,6 +45,13 @@
         </service>
 
         <service id="fazland.notifire.handler.mailgun.prototype" class="%fazland.notifire.handler.mailgun.prototype.class%" abstract="true" public="false">
+            <argument />
+            <argument />
+            <argument />
+            <tag name="fazland.notifire.handler" />
+        </service>
+
+        <service id="fazland.notifire.handler.sendgrid.prototype" class="%fazland.notifire.handler.sendgrid.prototype.class%" abstract="true" public="false">
             <argument />
             <argument />
             <argument />

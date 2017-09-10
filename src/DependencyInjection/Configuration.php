@@ -43,7 +43,7 @@ class Configuration implements ConfigurationInterface
                                 ->children()
                                     ->enumNode('provider')
                                         ->isRequired()
-                                        ->values(['swiftmailer', 'mailgun', 'composite'])
+                                        ->values(['swiftmailer', 'mailgun', 'sendgrid', 'composite'])
                                     ->end()
                                     ->arrayNode('composite')
                                         ->fixXmlConfig('provider')

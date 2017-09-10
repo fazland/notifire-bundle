@@ -150,6 +150,39 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         ], $configuration);
     }
 
+    public function testConfigureEmailSendgridIsPresent()
+    {
+        $configuration = $this->getConfigs([
+            'email' => [
+                'mailers' => [
+                    'sendgrid_app'=> [
+                        'provider'=> 'sendgrid',
+                        'api_key' => 'API_KEY',
+                        'domain' => 'testdomain'
+                    ]
+                ]
+            ]
+        ]);
+
+        $this->assertEquals([
+            'email' => [
+                'enabled' => true,
+                'auto_configure_swiftmailer' => true,
+                'mailers' => [
+                    'sendgrid_app'=> [
+                        'provider'=> 'sendgrid',
+                        'api_key' => 'API_KEY',
+                        'domain' => 'testdomain'
+                    ]
+                ]
+            ],
+            'sms' => [
+                'enabled' => false,
+                'services' => [],
+            ]
+        ], $configuration);
+    }
+
     private function getConfigs(array $configArray)
     {
         $configuration = new Configuration();

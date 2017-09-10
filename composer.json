@@ -2,7 +2,7 @@
     "name": "fazland/notifire-bundle",
     "require": {
         "php": ">= 5.5",
-        "fazland/notifire": "^0.3",
+        "fazland/notifire": "^0.3.1",
         "symfony/framework-bundle": "^2.7|^3.0"
     },
     "require-dev": {
@@ -14,7 +14,8 @@
         "symfony/css-selector": "^2.3|^3.0",
         "symfony/swiftmailer-bundle": "^2.3.3",
         "symfony/twig-bundle": "^2.7|^3.0",
-        "twilio/sdk": "^4.10"
+        "twilio/sdk": "^4.10",
+        "sendgrid/sendgrid": "^5.1"
     },
     "conflict": {
         "symfony/swiftmailer-bundle": "<2.3.3",
