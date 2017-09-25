@@ -130,6 +130,10 @@ class Configuration implements ConfigurationInterface
                 ->info('SMS Sender')
                 ->defaultNull()
             ->end()
+            ->scalarNode('logger')
+                ->info('Logger service')
+                ->defaultNull()
+            ->end()
         ;
 
         if (class_exists(SendMethods::class)) {

@@ -70,6 +70,7 @@ class NotifireExtension extends Extension
 
         foreach ($config['services'] as $name => $service) {
             $serviceName = 'fazland.notifire.handler.sms.'.$name;
+
             if ($service['provider'] === 'twilio') {
                 $account_sid = $service['username'];
                 $auth_token = $service['password'];
@@ -120,6 +121,11 @@ class NotifireExtension extends Extension
                 }
             } else {
                 throw new InvalidConfigurationException('Unknown provider "'.$service['provider'].'"');
+            }
+
+            if (isset($service['logger'])) {
+                $definition = $container->getDefinition($serviceName);
+                $definition->addMethodCall('setLogger', [new Reference($service['logger'])]);
             }
         }
     }
