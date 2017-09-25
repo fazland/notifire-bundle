@@ -23,6 +23,7 @@ class NotifireExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
+
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
@@ -123,9 +124,9 @@ class NotifireExtension extends Extension
                 throw new InvalidConfigurationException('Unknown provider "'.$service['provider'].'"');
             }
 
-            if (isset($service['logger'])) {
+            if (isset($service['logger_service'])) {
                 $definition = $container->getDefinition($serviceName);
-                $definition->addMethodCall('setLogger', [new Reference($service['logger'])]);
+                $definition->addMethodCall('setLogger', [new Reference($service['logger_service'])]);
             }
         }
     }

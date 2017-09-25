@@ -21,7 +21,7 @@
 
     <framework:config secret="test" test="true">
         <framework:session storage-id="session.storage.filesystem" />
-        <framework:csrf-protection enabled="true" />
+        <framework:csrf-protection enabled="false" />
         <framework:router resource="%kernel.root_dir%/config/routing.xml" />
         <framework:templating>
             <framework:engine>twig</framework:engine>

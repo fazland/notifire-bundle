@@ -90,6 +90,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                             'strategy' => 'rand'
                         ],
                         'method' => 'send_sms_basic',
+                        'logger_service' => null,
                     ],
                     'client2' => [
                         'provider' => 'skebby',
@@ -101,6 +102,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                             'strategy' => 'rand'
                         ],
                         'method' => 'send_sms_basic',
+                        'logger_service' => null,
                     ]
                 ],
             ]
@@ -144,6 +146,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                             'providers' => [],
                             'strategy' => 'rand'
                         ],
+                        'logger_service' => null,
                     ],
                 ],
             ]

@@ -19,7 +19,7 @@ class CoreExtension implements ExtensionInterface
         $builder
             ->addNotification('email', $this->getEmailClass())
             ->addNotification('sms', $this->getSmsClass())
-            ;
+        ;
     }
 
     protected function getEmailClass()

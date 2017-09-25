@@ -2,17 +2,19 @@
     "name": "fazland/notifire-bundle",
     "require": {
         "php": ">= 7.0",
-        "fazland/notifire": "^0.4",
+        "fazland/notifire": "^0.4@dev",
         "symfony/framework-bundle": "^2.7|^3.0"
     },
     "require-dev": {
-        "fazland/skebby-rest-client": "^0.1",
+        "fazland/skebby-rest-client": "^0.2@dev",
         "kcs/function-mock": "dev-master",
         "mailgun/mailgun-php": "^2.0",
         "phpunit/phpunit": "^4.8|^5.0",
+        "symfony/asset": "^2.7|^3.0",
         "symfony/browser-kit": "^2.7|^3.0",
         "symfony/css-selector": "^2.3|^3.0",
         "symfony/swiftmailer-bundle": "^2.3.3",
+        "symfony/templating": "^2.7|^3.0",
         "symfony/twig-bundle": "^2.7|^3.0",
         "twilio/sdk": "^4.10"
     },

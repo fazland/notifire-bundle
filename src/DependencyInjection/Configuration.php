@@ -99,7 +99,7 @@ class Configuration implements ConfigurationInterface
                         })
                         ->thenInvalid('Invalid SMS service configuration')
                     ->end()
-                    ->children();
+                    ->children()
         ;
 
         $service
@@ -130,7 +130,7 @@ class Configuration implements ConfigurationInterface
                 ->info('SMS Sender')
                 ->defaultNull()
             ->end()
-            ->scalarNode('logger')
+            ->scalarNode('logger_service')
                 ->info('Logger service')
                 ->defaultNull()
             ->end()
