@@ -62,7 +62,14 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'username' => 'foo_skebby',
                 'password' => 'bar_skebby',
                 'sender' => '+393668887789',
-            ]
+            ],
+            'client3' => [
+                'provider' => 'twilio',
+                'username' => 'foo_twilio',
+                'password' => 'bar_twilio',
+                'sender' => '+393668887789',
+                'twilio_messaging_service_sid' => 'service_foo_bar',
+            ],
         ];
 
         $configuration = $this->getConfigs([
@@ -85,6 +92,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                         'username' => 'foo_twilio',
                         'password' => 'bar_twilio',
                         'sender' => '+393668887789',
+                        'twilio_messaging_service_sid' => null,
                         'composite' => [
                             'providers' => [],
                             'strategy' => 'rand'
@@ -97,13 +105,27 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                         'username' => 'foo_skebby',
                         'password' => 'bar_skebby',
                         'sender' => '+393668887789',
+                        'twilio_messaging_service_sid' => null,
                         'composite' => [
                             'providers' => [],
                             'strategy' => 'rand'
                         ],
                         'method' => 'send_sms_basic',
                         'logger_service' => null,
-                    ]
+                    ],
+                    'client3' => [
+                        'provider' => 'twilio',
+                        'username' => 'foo_twilio',
+                        'password' => 'bar_twilio',
+                        'sender' => '+393668887789',
+                        'twilio_messaging_service_sid' => 'service_foo_bar',
+                        'composite' => [
+                            'providers' => [],
+                            'strategy' => 'rand'
+                        ],
+                        'method' => 'send_sms_basic',
+                        'logger_service' => null,
+                    ],
                 ],
             ]
         ], $configuration);
@@ -142,6 +164,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                         'username' => 'foo_twilio',
                         'password' => 'bar_twilio',
                         'sender' => '+393668887789',
+                        'twilio_messaging_service_sid' => null,
                         'composite' => [
                             'providers' => [],
                             'strategy' => 'rand'

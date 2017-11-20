@@ -87,6 +87,10 @@ class NotifireExtension extends Extension
                     ->addMethodCall('setDefaultFrom', [$service['sender']])
                 ;
 
+                if (isset($service['twilio_messaging_service_sid'])) {
+                    $definition->addMethodCall('setMessagingServiceSid', [$service['twilio_messaging_service_sid']]);
+                }
+
                 $container->setDefinition($serviceName, $definition);
             } elseif ($service['provider'] === 'skebby') {
                 $serviceId = $this->createSkebbyClient($container, $name, $service['username'], $service['password'], $service['sender'], $service['method']);
