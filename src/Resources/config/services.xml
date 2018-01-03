@@ -23,7 +23,7 @@
     </parameters>
 
     <services>
-        <service id="fazland.notifire.builder" class="%fazland.notifire.builder.class%">
+        <service id="fazland.notifire.builder" class="%fazland.notifire.builder.class%" public="true">
             <call method="setDispatcher">
                 <argument type="service" id="event_dispatcher" />
             </call>
