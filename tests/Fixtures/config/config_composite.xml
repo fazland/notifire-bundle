@@ -11,10 +11,19 @@
                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
     >
 
+    <services>
+        <service class="Fazland\NotifireBundle\Tests\Fixtures\TestBundle\ServiceHolder" id="email_service_holder" public="true">
+            <argument type="service" id="fazland.notifire.handler.email.default" on-invalid="null" />
+        </service>
+        <service id="logger" class="Psr\Log\NullLogger" />
+    </services>
+
     <framework:config secret="test" test="true">
         <framework:session storage-id="session.storage.filesystem" />
         <framework:csrf-protection enabled="false" />
-        <framework:templating enabled="false" />
+        <framework:templating>
+            <framework:engine>twig</framework:engine>
+        </framework:templating>
         <framework:router resource="%kernel.root_dir%/config/routing.xml" />
     </framework:config>
 
@@ -36,10 +45,4 @@
             </notifire:mailer>
         </notifire:email>
     </notifire:config>
-
-    <services>
-        <service class="Fazland\NotifireBundle\Tests\Fixtures\TestBundle\ServiceHolder" id="email_service_holder" public="true">
-            <argument type="service" id="fazland.notifire.handler.email.default" on-invalid="null" />
-        </service>
-    </services>
 </container>

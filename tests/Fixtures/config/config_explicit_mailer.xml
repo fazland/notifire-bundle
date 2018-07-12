@@ -11,10 +11,16 @@
                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
     >
 
+    <services>
+        <service id="logger" class="Psr\Log\NullLogger" />
+    </services>
+
     <framework:config secret="test" test="true">
         <framework:session storage-id="session.storage.filesystem" />
         <framework:csrf-protection enabled="false" />
-        <framework:templating enabled="false" />
+        <framework:templating>
+            <framework:engine>twig</framework:engine>
+        </framework:templating>
         <framework:router resource="%kernel.root_dir%/config/routing.xml" />
     </framework:config>
 

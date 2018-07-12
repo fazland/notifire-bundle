@@ -62,8 +62,7 @@
             <tag name="fazland.notifire.handler" />
         </service>
 
-        <service id="fazland.notifire.variable_renderer.factory" class="Fazland\NotifireBundle\VariableRenderer\Factory">
-        </service>
+        <service id="fazland.notifire.variable_renderer.factory" class="Fazland\NotifireBundle\VariableRenderer\Factory" />
 
         <service id="fazland.notifire.variable_renderer.mailgun" class="Fazland\NotifireBundle\VariableRenderer\MailgunRenderer">
             <tag name="fazland.notifire.variable_renderer" />

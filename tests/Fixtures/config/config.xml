@@ -19,6 +19,10 @@
         <parameter key="twilio_from_phone">ThisIsTwilioFromPhone</parameter>
     </parameters>
 
+    <services>
+        <service id="logger" class="Psr\Log\NullLogger" />
+    </services>
+
     <framework:config secret="test" test="true">
         <framework:session storage-id="session.storage.filesystem" />
         <framework:csrf-protection enabled="false" />

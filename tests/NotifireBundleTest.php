@@ -13,6 +13,8 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * @author Massimiliano Braglia <massimiliano.braglia@fazland.com>
  * @author Stefano Rainieri <stefano.rainieri@fazland.com>
+ *
+ * @runTestsInSeparateProcesses
  */
 class NotifireBundleTest extends WebTestCase
 {
@@ -24,7 +26,7 @@ class NotifireBundleTest extends WebTestCase
     /**
      * {@inheritdoc}
      */
-    public static function tearDownAfterClass()
+    public function tearDown()
     {
         $fs = new Filesystem();
         $fs->remove(__DIR__.'/Fixtures/cache');
