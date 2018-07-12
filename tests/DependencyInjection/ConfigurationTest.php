@@ -4,31 +4,77 @@ namespace Fazland\NotifierBundle\Tests\DependencyInjection;
 
 use Fazland\NotifireBundle\DependencyInjection\Configuration;
 use Fazland\SkebbyRestClient\Constant\SendMethods;
-use Kcs\FunctionMock\NamespaceProphecy;
-use Kcs\FunctionMock\PhpUnit\FunctionMockTrait;
+use phpmock\prophecy\PHPProphet;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Processor;
 
 class ConfigurationTest extends TestCase
 {
-    use FunctionMockTrait;
-
     /**
      * @var Processor
      */
     private $processor;
 
-    /**
-     * @var NamespaceProphecy
-     */
-    private $namespace;
-
     public function setUp()
     {
-        $this->namespace = $this->prophesizeForFunctions(Configuration::class);
-        $this->namespace->class_exists(SendMethods::class)->willReturn(true);
-
         $this->processor = new Processor();
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testConfigureSmsSkebbyNotPresent()
+    {
+        $prophet = new PHPProphet();
+
+        $namespace = $prophet->prophesize('Fazland\NotifireBundle\DependencyInjection');
+        $namespace->class_exists(SendMethods::class)
+            ->shouldBeCalled()
+            ->willReturn(false);
+
+        $namespace->reveal();
+
+        $services = [
+            'client1' => [
+                'provider' => 'twilio',
+                'username' => 'foo_twilio',
+                'password' => 'bar_twilio',
+                'sender' => '+393668887789',
+            ],
+        ];
+
+        $configuration = $this->getConfigs([
+            'sms' => [
+                'services' => $services,
+            ],
+        ]);
+
+        $this->assertEquals([
+            'email' => [
+                'enabled' => false,
+                'auto_configure_swiftmailer' => true,
+                'mailers' => [],
+            ],
+            'sms' => [
+                'enabled' => true,
+                'services' => [
+                    'client1' => [
+                        'provider' => 'twilio',
+                        'username' => 'foo_twilio',
+                        'password' => 'bar_twilio',
+                        'sender' => '+393668887789',
+                        'twilio_messaging_service_sid' => null,
+                        'composite' => [
+                            'providers' => [],
+                            'strategy' => 'rand',
+                        ],
+                        'logger_service' => null,
+                    ],
+                ],
+            ],
+        ], $configuration);
+
+        $prophet->checkPredictions();
     }
 
     public function testUnconfigured()
@@ -124,54 +170,6 @@ class ConfigurationTest extends TestCase
                             'strategy' => 'rand',
                         ],
                         'method' => 'send_sms_basic',
-                        'logger_service' => null,
-                    ],
-                ],
-            ],
-        ], $configuration);
-    }
-
-    /**
-     * @runInSeparateProcess
-     */
-    public function testConfigureSmsSkebbyNotPresent()
-    {
-        $this->namespace->class_exists(SendMethods::class)->willReturn(false);
-
-        $services = [
-            'client1' => [
-                'provider' => 'twilio',
-                'username' => 'foo_twilio',
-                'password' => 'bar_twilio',
-                'sender' => '+393668887789',
-            ],
-        ];
-
-        $configuration = $this->getConfigs([
-            'sms' => [
-                'services' => $services,
-            ],
-        ]);
-
-        $this->assertEquals([
-            'email' => [
-                'enabled' => false,
-                'auto_configure_swiftmailer' => true,
-                'mailers' => [],
-            ],
-            'sms' => [
-                'enabled' => true,
-                'services' => [
-                    'client1' => [
-                        'provider' => 'twilio',
-                        'username' => 'foo_twilio',
-                        'password' => 'bar_twilio',
-                        'sender' => '+393668887789',
-                        'twilio_messaging_service_sid' => null,
-                        'composite' => [
-                            'providers' => [],
-                            'strategy' => 'rand',
-                        ],
                         'logger_service' => null,
                     ],
                 ],
