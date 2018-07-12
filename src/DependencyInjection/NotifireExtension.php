@@ -85,8 +85,11 @@ class NotifireExtension extends Extension
                     ->setAbstract(false)
                     ->replaceArgument(0, new Reference($serviceId))
                     ->replaceArgument(1, $name)
-                    ->addMethodCall('setDefaultFrom', [$service['sender']])
                 ;
+
+                if (isset($service['sender'])) {
+                    $definition->addMethodCall('setDefaultFrom', [$service['sender']]);
+                }
 
                 if (isset($service['twilio_messaging_service_sid'])) {
                     $definition->addMethodCall('setMessagingServiceSid', [$service['twilio_messaging_service_sid']]);

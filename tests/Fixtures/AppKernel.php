@@ -42,31 +42,6 @@ class AppKernel extends Kernel
     }
 
     /**
-     * Initializes the service container.
-     *
-     * The cached version of the service container is used when fresh, otherwise the
-     * container is built.
-     */
-    protected function initializeContainer()
-    {
-        $class = $this->getContainerClass().crc32($this->configFileName);
-
-        $cache = new ConfigCache($this->getCacheDir().'/'.$class.'.php', $this->debug);
-        $container = $this->buildContainer();
-        $container->compile();
-        $this->dumpContainer($cache, $container, $class, $this->getContainerBaseClass());
-
-        require_once $cache->getPath();
-
-        $this->container = new $class();
-        $this->container->set('kernel', $this);
-
-        if ($this->container->has('cache_warmer')) {
-            $this->container->get('cache_warmer')->warmUp($this->container->getParameter('kernel.cache_dir'));
-        }
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function registerContainerConfiguration(LoaderInterface $loader)

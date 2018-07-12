@@ -131,6 +131,9 @@ class ConfigurationTest extends TestCase
         ], $configuration);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testConfigureSmsSkebbyNotPresent()
     {
         $this->namespace->class_exists(SendMethods::class)->willReturn(false);
