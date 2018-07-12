@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifireBundle\DependencyInjection\CompilerPass;
 
@@ -17,7 +17,7 @@ class EmailConfigurationPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->getParameter('fazland.notifire.emails.enabled')) {
+        if (! $container->getParameter('fazland.notifire.emails.enabled')) {
             return;
         }
 
@@ -30,7 +30,7 @@ class EmailConfigurationPass implements CompilerPassInterface
         $mailers = array_merge($swift_mailers, $mailers);
         foreach ($mailers as $name => $mailer) {
             $serviceName = 'fazland.notifire.handler.email.'.$name;
-            if ($mailer['provider'] === 'swiftmailer') {
+            if ('swiftmailer' === $mailer['provider']) {
                 $definition = clone $container->getDefinition('fazland.notifire.handler.swiftmailer.prototype');
                 $mailer_name = $mailer['mailer_name'] ?: $name;
 
@@ -42,7 +42,7 @@ class EmailConfigurationPass implements CompilerPassInterface
                 ;
 
                 $container->setDefinition($serviceName, $definition);
-            } elseif ($mailer['provider'] === 'mailgun') {
+            } elseif ('mailgun' === $mailer['provider']) {
                 $domain = $mailer['domain'];
 
                 $id = $this->createMailgunService($container, $mailer);
@@ -56,7 +56,7 @@ class EmailConfigurationPass implements CompilerPassInterface
                     ->replaceArgument(2, $name);
 
                 $container->setDefinition($serviceName, $definition);
-            } elseif ($mailer['provider'] === 'composite') {
+            } elseif ('composite' === $mailer['provider']) {
                 $config = $mailer['composite'];
 
                 if (empty($config['providers'])) {
@@ -82,7 +82,7 @@ class EmailConfigurationPass implements CompilerPassInterface
         }
     }
 
-    protected function getSwiftMailers(ContainerBuilder $container)
+    protected function getSwiftMailers(ContainerBuilder $container): array
     {
         $swiftMailerConfigs = $container->getExtensionConfig('swiftmailer');
         $swiftMailerConfiguration = new SwiftMailerConfiguration($container->getParameter('kernel.debug'));
@@ -100,7 +100,7 @@ class EmailConfigurationPass implements CompilerPassInterface
         return $mailers;
     }
 
-    protected function createMailgunService(ContainerBuilder $container, array $parameters)
+    protected function createMailgunService(ContainerBuilder $container, array $parameters): string
     {
         $apiKey = $parameters['api_key'];
         $domain = $parameters['domain'];

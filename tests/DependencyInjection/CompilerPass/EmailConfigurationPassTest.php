@@ -1,14 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifierBundle\Tests\DependencyInjection\CompilerPass;
 
 use Fazland\Notifire\Handler\Email\SwiftMailerHandler;
 use Fazland\NotifireBundle\DependencyInjection\CompilerPass\EmailConfigurationPass;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-class EmailConfigurationPassTest extends \PHPUnit_Framework_TestCase
+class EmailConfigurationPassTest extends TestCase
 {
     /**
      * @var EmailConfigurationPass

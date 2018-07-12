@@ -1,15 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifierBundle\Tests\DependencyInjection;
-
 
 use Fazland\NotifireBundle\DependencyInjection\Configuration;
 use Fazland\SkebbyRestClient\Constant\SendMethods;
 use Kcs\FunctionMock\NamespaceProphecy;
 use Kcs\FunctionMock\PhpUnit\FunctionMockTrait;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Processor;
 
-class ConfigurationTest extends \PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     use FunctionMockTrait;
 
@@ -44,7 +44,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'sms' => [
                 'enabled' => false,
                 'services' => [],
-            ]
+            ],
         ], $configuration);
     }
 
@@ -74,8 +74,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
         $configuration = $this->getConfigs([
             'sms' => [
-                'services' => $services
-            ]
+                'services' => $services,
+            ],
         ]);
 
         $this->assertEquals([
@@ -95,7 +95,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                         'twilio_messaging_service_sid' => null,
                         'composite' => [
                             'providers' => [],
-                            'strategy' => 'rand'
+                            'strategy' => 'rand',
                         ],
                         'method' => 'send_sms_basic',
                         'logger_service' => null,
@@ -108,7 +108,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                         'twilio_messaging_service_sid' => null,
                         'composite' => [
                             'providers' => [],
-                            'strategy' => 'rand'
+                            'strategy' => 'rand',
                         ],
                         'method' => 'send_sms_basic',
                         'logger_service' => null,
@@ -121,13 +121,13 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                         'twilio_messaging_service_sid' => 'service_foo_bar',
                         'composite' => [
                             'providers' => [],
-                            'strategy' => 'rand'
+                            'strategy' => 'rand',
                         ],
                         'method' => 'send_sms_basic',
                         'logger_service' => null,
                     ],
                 ],
-            ]
+            ],
         ], $configuration);
     }
 
@@ -146,8 +146,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
         $configuration = $this->getConfigs([
             'sms' => [
-                'services' => $services
-            ]
+                'services' => $services,
+            ],
         ]);
 
         $this->assertEquals([
@@ -167,12 +167,12 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                         'twilio_messaging_service_sid' => null,
                         'composite' => [
                             'providers' => [],
-                            'strategy' => 'rand'
+                            'strategy' => 'rand',
                         ],
                         'logger_service' => null,
                     ],
                 ],
-            ]
+            ],
         ], $configuration);
     }
 

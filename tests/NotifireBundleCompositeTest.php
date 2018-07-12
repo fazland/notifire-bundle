@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifireBundle\tests;
 
@@ -32,7 +32,9 @@ class NotifireBundleCompositeTest extends WebTestCase
         $client = static::createClient();
         $container = $client->getContainer();
 
-        $this->assertNotEmpty($container->get('fazland.notifire.handler.email.default'));
-        $this->assertInstanceOf(CompositeNotificationHandler::class, $container->get('fazland.notifire.handler.email.default'));
+        $service = $container->get('email_service_holder')->getInstance();
+
+        $this->assertNotEmpty($service);
+        $this->assertInstanceOf(CompositeNotificationHandler::class, $service);
     }
 }

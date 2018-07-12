@@ -1,14 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifireBundle\Tests\VariableRenderer;
 
 use Fazland\NotifireBundle\VariableRenderer\Factory;
 use Fazland\NotifireBundle\VariableRenderer\VariableRendererInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Massimiliano Braglia <massimiliano.braglia@fazland.com>
  */
-class FactoryTest extends \PHPUnit_Framework_TestCase
+class FactoryTest extends TestCase
 {
     /**
      * @var Factory

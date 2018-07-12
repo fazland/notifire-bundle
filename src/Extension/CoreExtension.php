@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifireBundle\Extension;
 
@@ -22,12 +22,12 @@ class CoreExtension implements ExtensionInterface
         ;
     }
 
-    protected function getEmailClass()
+    protected function getEmailClass(): string
     {
         return Email::class;
     }
 
-    protected function getSmsClass()
+    protected function getSmsClass(): string
     {
         return Sms::class;
     }

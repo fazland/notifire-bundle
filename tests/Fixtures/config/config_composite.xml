@@ -36,4 +36,10 @@
             </notifire:mailer>
         </notifire:email>
     </notifire:config>
+
+    <services>
+        <service class="Fazland\NotifireBundle\Tests\Fixtures\TestBundle\ServiceHolder" id="email_service_holder" public="true">
+            <argument type="service" id="fazland.notifire.handler.email.default" on-invalid="null" />
+        </service>
+    </services>
 </container>

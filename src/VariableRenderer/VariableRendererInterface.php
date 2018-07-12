@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifireBundle\VariableRenderer;
 
@@ -12,7 +12,7 @@ interface VariableRendererInterface
      *
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Given a $variableName, the renderer MUST return its string representation.
@@ -21,5 +21,5 @@ interface VariableRendererInterface
      *
      * @return string
      */
-    public function render($variableName);
+    public function render(string $variableName): string;
 }

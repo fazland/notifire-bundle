@@ -1,13 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifireBundle\Tests\VariableRenderer;
 
 use Fazland\NotifireBundle\VariableRenderer\MailgunRenderer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Massimiliano Braglia <massimiliano.braglia@fazland.com>
  */
-class MailgunRendererTest extends \PHPUnit_Framework_TestCase
+class MailgunRendererTest extends TestCase
 {
     public function testRender()
     {

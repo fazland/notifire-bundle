@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifireBundle\DependencyInjection;
 
@@ -63,7 +63,7 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                                 ->validate()
                                     ->ifTrue(function ($value) {
-                                        if ($value['provider'] === 'mailgun' && (!isset($value['api_key']) || !isset($value['domain']))) {
+                                        if ('mailgun' === $value['provider'] && (! isset($value['api_key']) || ! isset($value['domain']))) {
                                             return true;
                                         }
 

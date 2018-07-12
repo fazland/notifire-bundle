@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifireBundle\tests;
 
@@ -9,7 +9,6 @@ use Fazland\Notifire\Handler\Sms\TwilioHandler;
 use Fazland\NotifireBundle\Tests\Fixtures\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Tests\Functional\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Massimiliano Braglia <massimiliano.braglia@fazland.com>

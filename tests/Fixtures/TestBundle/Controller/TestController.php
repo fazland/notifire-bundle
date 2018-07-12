@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifireBundle\Tests\Fixtures\TestBundle\Controller;
 
@@ -13,7 +13,7 @@ class TestController extends Controller
     /**
      * @return Response
      */
-    public function defaultAction()
+    public function defaultAction(): Response
     {
         return new Response();
     }

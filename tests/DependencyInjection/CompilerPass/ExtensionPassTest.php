@@ -1,14 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifireBundle\tests\DependencyInjection\CompilerPass;
 
 use Fazland\NotifireBundle\DependencyInjection\CompilerPass\ExtensionPass;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
-class ExtensionPassTest extends \PHPUnit_Framework_TestCase
+class ExtensionPassTest extends TestCase
 {
     private $compilerPass;
 
@@ -32,10 +33,10 @@ class ExtensionPassTest extends \PHPUnit_Framework_TestCase
             ]);
 
         $definition->addMethodCall('addExtension', Argument::that(function ($arg) {
-            return is_array($arg) && $arg[0] instanceof Reference && (string) $arg[0] === 'extension.one';
+            return is_array($arg) && $arg[0] instanceof Reference && 'extension.one' === (string) $arg[0];
         }))->shouldBeCalled();
         $definition->addMethodCall('addExtension', Argument::that(function ($arg) {
-            return is_array($arg) && $arg[0] instanceof Reference && (string) $arg[0] === 'extension.two';
+            return is_array($arg) && $arg[0] instanceof Reference && 'extension.two' === (string) $arg[0];
         }))->shouldBeCalled();
 
         $this->compilerPass->process($container->reveal());

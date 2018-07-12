@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifireBundle\VariableRenderer;
 
@@ -12,7 +12,7 @@ class MailgunRenderer implements VariableRendererInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'mailgun';
     }
@@ -20,7 +20,7 @@ class MailgunRenderer implements VariableRendererInterface
     /**
      * {@inheritdoc}
      */
-    public function render($variableName)
+    public function render(string $variableName): string
     {
         return '%'.static::PREFIX.$variableName.'%';
     }

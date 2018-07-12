@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifireBundle\Twig;
 
@@ -22,6 +22,7 @@ class VariableRendererExtension extends \Twig_Extension
 
     /**
      * VariableRendererExtension constructor.
+     *
      * @param Factory $factory
      */
     public function __construct(Factory $factory)
@@ -40,7 +41,7 @@ class VariableRendererExtension extends \Twig_Extension
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new \Twig_SimpleFilter('render_variable', [$this, 'render']),
@@ -55,7 +56,7 @@ class VariableRendererExtension extends \Twig_Extension
      *
      * @throws VariableRendererNotFoundException
      */
-    public function render($variable, $rendererName = '')
+    public function render(string $variable, string $rendererName = ''): string
     {
         $targetRenderer = null;
 
@@ -76,7 +77,7 @@ class VariableRendererExtension extends \Twig_Extension
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'fazland.notifire.variable_renderer_extension';
     }

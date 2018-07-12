@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifireBundle\VariableRenderer;
 
@@ -42,7 +42,7 @@ class Factory
      *
      * @throws VariableRendererNotFoundException
      */
-    public function get($name)
+    public function get(string $name): VariableRendererInterface
     {
         if (! isset($this->renderers[$name])) {
             throw new VariableRendererNotFoundException("Could not find a renderer with name '$name'");

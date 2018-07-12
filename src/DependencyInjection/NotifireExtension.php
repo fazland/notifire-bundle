@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Fazland\NotifireBundle\DependencyInjection;
 
@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
+use Twilio\Rest\Client;
 
 /**
  * @author Alessandro Chitolina <alessandro.chitolina@fazland.com>
@@ -38,7 +39,7 @@ class NotifireExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function getNamespace()
+    public function getNamespace(): string
     {
         return 'http://fazland.com/schema/dic/'.$this->getAlias();
     }
@@ -46,7 +47,7 @@ class NotifireExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function getXsdValidationBasePath()
+    public function getXsdValidationBasePath(): string
     {
         return __DIR__.'/../Resources/config/schema';
     }
@@ -54,7 +55,7 @@ class NotifireExtension extends Extension
     private function processEmails(ContainerBuilder $container, array $config)
     {
         $container->setParameter('fazland.notifire.emails.enabled', $config['enabled']);
-        if (!$config['enabled']) {
+        if (! $config['enabled']) {
             return;
         }
 
@@ -65,14 +66,14 @@ class NotifireExtension extends Extension
     private function processSms(ContainerBuilder $container, array $config)
     {
         $container->setParameter('fazland.notifire.sms.enabled', $config['enabled']);
-        if (!$config['enabled']) {
+        if (! $config['enabled']) {
             return;
         }
 
         foreach ($config['services'] as $name => $service) {
             $serviceName = 'fazland.notifire.handler.sms.'.$name;
 
-            if ($service['provider'] === 'twilio') {
+            if ('twilio' === $service['provider']) {
                 $account_sid = $service['username'];
                 $auth_token = $service['password'];
 
@@ -92,7 +93,7 @@ class NotifireExtension extends Extension
                 }
 
                 $container->setDefinition($serviceName, $definition);
-            } elseif ($service['provider'] === 'skebby') {
+            } elseif ('skebby' === $service['provider']) {
                 $serviceId = $this->createSkebbyClient($container, $name, $service['username'], $service['password'], $service['sender'], $service['method']);
 
                 $definition = clone $container->getDefinition('fazland.notifire.handler.skebby.prototype');
@@ -104,7 +105,7 @@ class NotifireExtension extends Extension
                 ;
 
                 $container->setDefinition($serviceName, $definition);
-            } elseif ($service['provider'] === 'composite') {
+            } elseif ('composite' === $service['provider']) {
                 $config = $service['composite'];
 
                 if (empty($config['providers'])) {
@@ -135,9 +136,16 @@ class NotifireExtension extends Extension
         }
     }
 
-    protected function createTwilioService(ContainerBuilder $container, $name, $sid, $token)
-    {
-        $definition = new Definition(\Services_Twilio::class, [$sid, $token]);
+    protected function createTwilioService(
+        ContainerBuilder $container,
+        string $name,
+        string $sid,
+        string $token
+    ): string {
+        $definition = new Definition(
+            ! class_exists(Client::class) ? \Services_Twilio::class : Client::class,
+            [$sid, $token]
+        );
         $definition->addTag("fazland.notifire.twilio.$name");
 
         $definitionId = "fazland.notifire.twilio.service.$name";
@@ -146,8 +154,14 @@ class NotifireExtension extends Extension
         return $definitionId;
     }
 
-    protected function createSkebbyClient(ContainerBuilder $container, $name, $username, $password, $sender, $method)
-    {
+    protected function createSkebbyClient(
+        ContainerBuilder $container,
+        string $name,
+        string $username,
+        string $password,
+        string $sender,
+        string $method
+    ): string {
         $definitionId = 'fazland.notifire.skebby.client.'.$name;
         $container->register($definitionId, SkebbyRestClient::class)
             ->addArgument([
@@ -162,7 +176,7 @@ class NotifireExtension extends Extension
 
     /**
      * @param ContainerBuilder $container
-     * @param array $config
+     * @param array            $config
      */
     private function processDefaultVariableRenderer(ContainerBuilder $container, array $config)
     {
