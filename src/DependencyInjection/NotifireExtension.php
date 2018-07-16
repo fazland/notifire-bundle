@@ -30,6 +30,10 @@ class NotifireExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
+        if (! $container->hasDefinition('twig')) {
+            $container->removeDefinition('fazland.notifire.processor.twig_processor');
+        }
+
         $this->processEmails($container, $config['email']);
         $this->processSms($container, $config['sms']);
 
