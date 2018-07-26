@@ -5,6 +5,7 @@ namespace Fazland\NotifireBundle;
 use Fazland\NotifireBundle\DependencyInjection\CompilerPass\EmailConfigurationPass;
 use Fazland\NotifireBundle\DependencyInjection\CompilerPass\ExtensionPass;
 use Fazland\NotifireBundle\DependencyInjection\CompilerPass\RegisterHandlerPass;
+use Fazland\NotifireBundle\DependencyInjection\CompilerPass\TwigProcessorRemoverPass;
 use Fazland\NotifireBundle\DependencyInjection\CompilerPass\VariableRendererPass;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -22,6 +23,7 @@ class NotifireBundle extends Bundle
             ->addCompilerPass(new EmailConfigurationPass())
             ->addCompilerPass(new VariableRendererPass())
             ->addCompilerPass(new RegisterHandlerPass(), PassConfig::TYPE_BEFORE_REMOVING)
+            ->addCompilerPass(new TwigProcessorRemoverPass(), PassConfig::TYPE_BEFORE_REMOVING)
         ;
     }
 
