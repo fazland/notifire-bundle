@@ -1,5 +1,7 @@
-Notifire Bundle  
+Notifire Bundle
 ===============
+[![Build Status](https://travis-ci.org/fazland/notifire-bundle.svg?branch=master)](https://travis-ci.org/fazland/notifire-bundle)
+
 Notifire Bundle provides integration of [Notifire](https://github.com/fazland/Notifire) library into the [Symfony](https://github.com/symfony/symfony) Framework.
 
 Notifire is a PHP library that centralizes the management of notifications (e-mails, sms, push notifications, etc.), check its [GitHub page](https://github.com/fazland/Notifire) to learn more.
