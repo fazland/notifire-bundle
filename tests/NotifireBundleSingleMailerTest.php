@@ -14,6 +14,9 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class NotifireBundleSingleMailerTest extends WebTestCase
 {
+    /**
+     * {@inheritdoc}
+     */
     protected static function createKernel(array $options = [])
     {
         return new AppKernel('test', true, 'config_explicit_mailer.xml');
@@ -34,9 +37,9 @@ class NotifireBundleSingleMailerTest extends WebTestCase
         $client = static::createClient();
         $container = $client->getContainer();
 
-        $this->assertNotEmpty($container->get('fazland.notifire.handler.email.first_mailer'));
-        $this->assertInstanceOf(SwiftMailerHandler::class, $container->get('fazland.notifire.handler.email.first_mailer'));
+        self::assertNotEmpty($container->get('fazland.notifire.handler.email.first_mailer'));
+        self::assertInstanceOf(SwiftMailerHandler::class, $container->get('fazland.notifire.handler.email.first_mailer'));
 
-        $this->assertFalse($container->has('fazland.notifire.handler.email.second_mailer'));
+        self::assertFalse($container->has('fazland.notifire.handler.email.second_mailer'));
     }
 }

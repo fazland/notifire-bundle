@@ -50,6 +50,6 @@ class FactoryTest extends TestCase
 
         $this->factory->addRenderer($renderer->reveal());
 
-        $this->assertEquals($this->factory->get('test_renderer'), $renderer->reveal());
+        self::assertEquals($this->factory->get('test_renderer'), $renderer->reveal());
     }
 }

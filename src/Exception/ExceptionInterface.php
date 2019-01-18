@@ -7,5 +7,4 @@ namespace Fazland\NotifireBundle\Exception;
  */
 interface ExceptionInterface
 {
-
 }

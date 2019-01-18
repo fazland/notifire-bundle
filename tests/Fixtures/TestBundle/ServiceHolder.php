@@ -12,7 +12,7 @@ class ServiceHolder
     }
 
     /**
-     * Gets the held service instance
+     * Gets the held service instance.
      *
      * @return mixed
      */

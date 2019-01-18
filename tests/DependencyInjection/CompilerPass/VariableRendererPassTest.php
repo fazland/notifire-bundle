@@ -5,6 +5,7 @@ namespace Fazland\NotifireBundle\Tests\DependencyInjection\CompilerPass;
 use Fazland\NotifireBundle\DependencyInjection\CompilerPass\VariableRendererPass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
@@ -14,8 +15,14 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class VariableRendererPassTest extends TestCase
 {
+    /**
+     * @var CompilerPassInterface
+     */
     private $compilerPass;
 
+    /**
+     * {@inheritdoc}
+     */
     public function setUp()
     {
         $this->compilerPass = new VariableRendererPass();
@@ -40,10 +47,10 @@ class VariableRendererPassTest extends TestCase
         $container->hasParameter('fazland.notifire.default_variable_renderer')->willReturn(false);
 
         $definition->addMethodCall('addRenderer', Argument::that(function ($arg) {
-            return is_array($arg) && $arg[0] instanceof Reference && 'renderer.one' === (string) $arg[0];
+            return \is_array($arg) && $arg[0] instanceof Reference && 'renderer.one' === (string) $arg[0];
         }))->shouldBeCalled();
         $definition->addMethodCall('addRenderer', Argument::that(function ($arg) {
-            return is_array($arg) && $arg[0] instanceof Reference && 'renderer.two' === (string) $arg[0];
+            return \is_array($arg) && $arg[0] instanceof Reference && 'renderer.two' === (string) $arg[0];
         }))->shouldBeCalled();
 
         $container->getDefinition('fazland.notifire.variable_renderer.factory')

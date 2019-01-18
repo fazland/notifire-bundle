@@ -21,6 +21,9 @@ class EmailConfigurationPassTest extends TestCase
      */
     private $container;
 
+    /**
+     * {@inheritdoc}
+     */
     public function setUp()
     {
         $this->pass = new EmailConfigurationPass();
@@ -66,10 +69,10 @@ class EmailConfigurationPassTest extends TestCase
 
         $this->pass->process($this->container);
 
-        $this->assertTrue($this->container->has('fazland.notifire.handler.email.first'));
-        $this->assertTrue($this->container->has('fazland.notifire.handler.email.second'));
+        self::assertTrue($this->container->has('fazland.notifire.handler.email.first'));
+        self::assertTrue($this->container->has('fazland.notifire.handler.email.second'));
 
-        $this->assertEquals(SwiftMailerHandler::class, $this->container->getDefinition('fazland.notifire.handler.email.first')->getClass());
-        $this->assertEquals(SwiftMailerHandler::class, $this->container->getDefinition('fazland.notifire.handler.email.second')->getClass());
+        self::assertEquals(SwiftMailerHandler::class, $this->container->getDefinition('fazland.notifire.handler.email.first')->getClass());
+        self::assertEquals(SwiftMailerHandler::class, $this->container->getDefinition('fazland.notifire.handler.email.second')->getClass());
     }
 }

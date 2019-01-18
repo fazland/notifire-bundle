@@ -17,6 +17,6 @@ class MailgunRendererTest extends TestCase
         $variableName = 'variable_name';
         $expected = '%recipient.variable_name%';
 
-        $this->assertEquals($expected, $renderer->render($variableName));
+        self::assertEquals($expected, $renderer->render($variableName));
     }
 }

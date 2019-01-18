@@ -2,8 +2,10 @@
 
 namespace Fazland\NotifireBundle\DependencyInjection;
 
+use Fazland\NotifireBundle\Utils\ClassUtils;
 use Fazland\SkebbyRestClient\Constant\SendMethods;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeParentInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -13,9 +15,19 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
+     * @var ClassUtils
+     */
+    private $classUtils;
+
+    public function __construct(ClassUtils $classUtils)
+    {
+        $this->classUtils = $classUtils;
+    }
+
+    /**
      * {@inheritdoc}
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): NodeParentInterface
     {
         if (\method_exists(TreeBuilder::class, 'getRootNode')) {
             $treeBuilder = new TreeBuilder('fazland_notifire');
@@ -145,7 +157,7 @@ class Configuration implements ConfigurationInterface
             ->end()
         ;
 
-        if (class_exists(SendMethods::class)) {
+        if ($this->classUtils->exists(SendMethods::class)) {
             $service
                 ->enumNode('method')
                     ->info('Skebby send method')

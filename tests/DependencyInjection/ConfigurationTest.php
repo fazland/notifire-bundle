@@ -3,85 +3,40 @@
 namespace Fazland\NotifierBundle\Tests\DependencyInjection;
 
 use Fazland\NotifireBundle\DependencyInjection\Configuration;
+use Fazland\NotifireBundle\Utils\ClassUtils;
 use Fazland\SkebbyRestClient\Constant\SendMethods;
-use phpmock\prophecy\PHPProphet;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Config\Definition\Processor;
 
 class ConfigurationTest extends TestCase
 {
     /**
+     * @var ClassUtils|ObjectProphecy
+     */
+    private $classUtils;
+
+    /**
      * @var Processor
      */
     private $processor;
 
+    /**
+     * {@inheritdoc}
+     */
     public function setUp()
     {
+        $this->classUtils = $this->prophesize(ClassUtils::class);
         $this->processor = new Processor();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
-    public function testConfigureSmsSkebbyNotPresent()
+    public function testNotConfigured()
     {
-        $prophet = new PHPProphet();
+        $this->classUtils->exists(SendMethods::class)->willReturn(false);
 
-        $namespace = $prophet->prophesize('Fazland\NotifireBundle\DependencyInjection');
-        $namespace->class_exists(SendMethods::class)
-            ->shouldBeCalled()
-            ->willReturn(false);
-
-        $namespace->reveal();
-
-        $services = [
-            'client1' => [
-                'provider' => 'twilio',
-                'username' => 'foo_twilio',
-                'password' => 'bar_twilio',
-                'sender' => '+393668887789',
-            ],
-        ];
-
-        $configuration = $this->getConfigs([
-            'sms' => [
-                'services' => $services,
-            ],
-        ]);
-
-        $this->assertEquals([
-            'email' => [
-                'enabled' => false,
-                'auto_configure_swiftmailer' => true,
-                'mailers' => [],
-            ],
-            'sms' => [
-                'enabled' => true,
-                'services' => [
-                    'client1' => [
-                        'provider' => 'twilio',
-                        'username' => 'foo_twilio',
-                        'password' => 'bar_twilio',
-                        'sender' => '+393668887789',
-                        'twilio_messaging_service_sid' => null,
-                        'composite' => [
-                            'providers' => [],
-                            'strategy' => 'rand',
-                        ],
-                        'logger_service' => null,
-                    ],
-                ],
-            ],
-        ], $configuration);
-
-        $prophet->checkPredictions();
-    }
-
-    public function testUnconfigured()
-    {
         $configuration = $this->getConfigs([]);
 
-        $this->assertEquals([
+        self::assertEquals([
             'email' => [
                 'enabled' => false,
                 'auto_configure_swiftmailer' => true,
@@ -118,13 +73,14 @@ class ConfigurationTest extends TestCase
             ],
         ];
 
+        $this->classUtils->exists(SendMethods::class)->willReturn(true);
         $configuration = $this->getConfigs([
             'sms' => [
                 'services' => $services,
             ],
         ]);
 
-        $this->assertEquals([
+        self::assertEquals([
             'email' => [
                 'enabled' => false,
                 'auto_configure_swiftmailer' => true,
@@ -177,9 +133,9 @@ class ConfigurationTest extends TestCase
         ], $configuration);
     }
 
-    private function getConfigs(array $configArray)
+    private function getConfigs(array $configArray): array
     {
-        $configuration = new Configuration();
+        $configuration = new Configuration($this->classUtils->reveal());
 
         return $this->processor->processConfiguration($configuration, [$configArray]);
     }

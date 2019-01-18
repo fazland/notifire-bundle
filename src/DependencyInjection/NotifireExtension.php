@@ -2,6 +2,7 @@
 
 namespace Fazland\NotifireBundle\DependencyInjection;
 
+use Fazland\NotifireBundle\Utils\ClassUtils;
 use Fazland\SkebbyRestClient\Client\Client as SkebbyRestClient;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
@@ -23,7 +24,7 @@ class NotifireExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
+        $configuration = new Configuration(new ClassUtils());
 
         $config = $this->processConfiguration($configuration, $configs);
 
@@ -116,7 +117,7 @@ class NotifireExtension extends Extension
                 }
 
                 $strategy = $config['strategy'];
-                if (in_array($strategy, ['rand'])) {
+                if (\in_array($strategy, ['rand'])) {
                     $strategy = 'fazland.notifire.handler_choice_strategy.'.$strategy;
                 }
 
@@ -146,7 +147,7 @@ class NotifireExtension extends Extension
         string $token
     ): string {
         $definition = new Definition(
-            ! class_exists(Client::class) ? \Services_Twilio::class : Client::class,
+            ! \class_exists(Client::class) ? \Services_Twilio::class : Client::class,
             [$sid, $token]
         );
         $definition->addTag("fazland.notifire.twilio.$name");

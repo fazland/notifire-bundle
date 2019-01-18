@@ -14,6 +14,9 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class NotifireBundleCompositeTest extends WebTestCase
 {
+    /**
+     * {@inheritdoc}
+     */
     protected static function createKernel(array $options = [])
     {
         return new AppKernel('test', true, 'config_composite.xml');
@@ -36,7 +39,7 @@ class NotifireBundleCompositeTest extends WebTestCase
 
         $service = $container->get('email_service_holder')->getInstance();
 
-        $this->assertNotEmpty($service);
-        $this->assertInstanceOf(CompositeNotificationHandler::class, $service);
+        self::assertNotEmpty($service);
+        self::assertInstanceOf(CompositeNotificationHandler::class, $service);
     }
 }

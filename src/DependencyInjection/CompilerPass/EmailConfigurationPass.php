@@ -27,7 +27,7 @@ class EmailConfigurationPass implements CompilerPassInterface
         }
 
         $mailers = $container->hasParameter('fazland.notifire.emails.mailers') ? $container->getParameter('fazland.notifire.emails.mailers') : [];
-        $mailers = array_merge($swift_mailers, $mailers);
+        $mailers = \array_merge($swift_mailers, $mailers);
         foreach ($mailers as $name => $mailer) {
             $serviceName = 'fazland.notifire.handler.email.'.$name;
             if ('swiftmailer' === $mailer['provider']) {
@@ -64,7 +64,7 @@ class EmailConfigurationPass implements CompilerPassInterface
                 }
 
                 $strategy = $config['strategy'];
-                if (in_array($strategy, ['rand'])) {
+                if (\in_array($strategy, ['rand'])) {
                     $strategy = 'fazland.notifire.handler_choice_strategy.'.$strategy;
                 }
 
@@ -93,7 +93,7 @@ class EmailConfigurationPass implements CompilerPassInterface
         $swiftMailerConfig = $processor->processConfiguration($swiftMailerConfiguration, $swiftMailerConfig);
 
         $mailers = [];
-        foreach (array_keys($swiftMailerConfig['mailers']) as $name) {
+        foreach (\array_keys($swiftMailerConfig['mailers']) as $name) {
             $mailers[$name] = ['provider' => 'swiftmailer', 'mailer_name' => $name];
         }
 
