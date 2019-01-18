@@ -6,7 +6,7 @@ Notifire is a PHP library that centralizes the management of notifications (e-ma
 
 Requirements
 ------------
-- php >= 5.5.0
+- php >= 7.0
 - symfony/symfony >= 2.7
 - fazland/notifire
 
