@@ -20,7 +20,7 @@ class ExtensionPassTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp()
     {
         $this->compilerPass = new ExtensionPass();
     }
@@ -31,13 +31,15 @@ class ExtensionPassTest extends TestCase
         $definition = $this->prophesize(Definition::class);
 
         $container->getDefinition('fazland.notifire.builder')
-            ->willReturn($definition->reveal());
+            ->willReturn($definition->reveal())
+        ;
 
         $container->findTaggedServiceIds('fazland.notifire.extension')
             ->willReturn([
                 'extension.one' => [],
                 'extension.two' => [],
-            ]);
+            ])
+        ;
 
         $definition->addMethodCall('addExtension', Argument::that(function ($arg) {
             return \is_array($arg) && $arg[0] instanceof Reference && 'extension.one' === (string) $arg[0];

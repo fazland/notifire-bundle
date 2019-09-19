@@ -4,7 +4,7 @@ namespace Fazland\NotifireBundle\tests;
 
 use Fazland\Notifire\Handler\Email\SwiftMailerHandler;
 use Fazland\NotifireBundle\Tests\Fixtures\AppKernel;
-use Symfony\Bundle\FrameworkBundle\Tests\Functional\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -25,7 +25,7 @@ class NotifireBundleSingleMailerTest extends WebTestCase
     /**
      * {@inheritdoc}
      */
-    public function tearDown()
+    protected function tearDown()
     {
         $fs = new Filesystem();
         $fs->remove(__DIR__.'/Fixtures/cache');

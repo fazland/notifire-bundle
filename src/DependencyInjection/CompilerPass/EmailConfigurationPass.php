@@ -53,7 +53,8 @@ class EmailConfigurationPass implements CompilerPassInterface
                     ->setAbstract(false)
                     ->replaceArgument(0, new Reference($id))
                     ->replaceArgument(1, $domain)
-                    ->replaceArgument(2, $name);
+                    ->replaceArgument(2, $name)
+                ;
 
                 $container->setDefinition($serviceName, $definition);
             } elseif ('composite' === $mailer['provider']) {
@@ -71,7 +72,8 @@ class EmailConfigurationPass implements CompilerPassInterface
                 $handler = $container->register($serviceName, $container->getParameter('fazland.notifire.handler.composite.prototype.class'))
                     ->addArgument($name)
                     ->addArgument(new Reference($strategy))
-                    ->addTag('fazland.notifire.handler');
+                    ->addTag('fazland.notifire.handler')
+                ;
 
                 foreach ($config['providers'] as $provider_name) {
                     $handler->addMethodCall('addNotificationHandler', [new Reference('fazland.notifire.handler.email.'.$provider_name)]);
@@ -106,7 +108,8 @@ class EmailConfigurationPass implements CompilerPassInterface
         $domain = $parameters['domain'];
 
         $container->register(($id = 'fazland.notifire.mailgun.'.$domain), Mailgun::class)
-            ->setArguments([$apiKey]);
+            ->setArguments([$apiKey])
+        ;
 
         return $id;
     }

@@ -4,8 +4,9 @@ namespace Fazland\NotifireBundle\tests;
 
 use Fazland\Notifire\Handler\CompositeNotificationHandler;
 use Fazland\NotifireBundle\Tests\Fixtures\AppKernel;
-use Symfony\Bundle\FrameworkBundle\Tests\Functional\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @author Massimiliano Braglia <massimiliano.braglia@fazland.com>
@@ -17,7 +18,7 @@ class NotifireBundleCompositeTest extends WebTestCase
     /**
      * {@inheritdoc}
      */
-    protected static function createKernel(array $options = [])
+    protected static function createKernel(array $options = []): KernelInterface
     {
         return new AppKernel('test', true, 'config_composite.xml');
     }
@@ -25,7 +26,7 @@ class NotifireBundleCompositeTest extends WebTestCase
     /**
      * {@inheritdoc}
      */
-    public function tearDown()
+    protected function tearDown()
     {
         $fs = new Filesystem();
         $fs->remove(__DIR__.'/Fixtures/cache');

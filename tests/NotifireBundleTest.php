@@ -7,7 +7,7 @@ use Fazland\Notifire\Handler\Email\SwiftMailerHandler;
 use Fazland\Notifire\Handler\Sms\SkebbyHandler;
 use Fazland\Notifire\Handler\Sms\TwilioHandler;
 use Fazland\NotifireBundle\Tests\Fixtures\AppKernel;
-use Symfony\Bundle\FrameworkBundle\Tests\Functional\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -29,7 +29,7 @@ class NotifireBundleTest extends WebTestCase
     /**
      * {@inheritdoc}
      */
-    public function tearDown()
+    protected function tearDown()
     {
         $fs = new Filesystem();
         $fs->remove(__DIR__.'/Fixtures/cache');
@@ -38,9 +38,7 @@ class NotifireBundleTest extends WebTestCase
 
     public function provideRoutesAndExpectedResults()
     {
-        return [
-            ['/test-mailgun-variable-renderer', 'mailgun_variable_render.txt'],
-        ];
+        yield ['/test-mailgun-variable-renderer', 'mailgun_variable_render.txt'];
     }
 
     public function testSwiftMailerHandlerConfiguration()
@@ -93,8 +91,8 @@ class NotifireBundleTest extends WebTestCase
         $client->request('GET', $route);
 
         $response = $client->getResponse();
-        self::assertEquals(
-            \file_get_contents(__DIR__.'/Fixtures/expected/'.$resultFile), $response->getContent()
+        self::assertStringEqualsFile(
+            __DIR__.'/Fixtures/expected/'.$resultFile, $response->getContent()
         );
     }
 }

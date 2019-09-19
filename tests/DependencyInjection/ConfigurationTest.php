@@ -24,7 +24,7 @@ class ConfigurationTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp()
     {
         $this->classUtils = $this->prophesize(ClassUtils::class);
         $this->processor = new Processor();

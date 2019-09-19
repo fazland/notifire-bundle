@@ -124,7 +124,8 @@ class NotifireExtension extends Extension
                 $handler = $container->register($serviceName, $container->getParameter('fazland.notifire.handler.composite.prototype.class'))
                     ->addArgument($name)
                     ->addArgument(new Reference($strategy))
-                    ->addTag('fazland.notifire.handler');
+                    ->addTag('fazland.notifire.handler')
+                ;
 
                 foreach ($config['providers'] as $provider_name) {
                     $handler->addMethodCall('addNotificationHandler', [new Reference('fazland.notifire.handler.sms.'.$provider_name)]);
@@ -173,7 +174,8 @@ class NotifireExtension extends Extension
                 'password' => $password,
                 'sender' => $sender,
                 'method' => $method,
-            ]);
+            ])
+        ;
 
         return $definitionId;
     }

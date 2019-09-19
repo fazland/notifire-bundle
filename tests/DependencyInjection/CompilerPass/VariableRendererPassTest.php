@@ -23,7 +23,7 @@ class VariableRendererPassTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp()
     {
         $this->compilerPass = new VariableRendererPass();
     }
