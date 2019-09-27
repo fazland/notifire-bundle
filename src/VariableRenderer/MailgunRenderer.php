@@ -7,7 +7,7 @@ namespace Fazland\NotifireBundle\VariableRenderer;
  */
 class MailgunRenderer implements VariableRendererInterface
 {
-    const PREFIX = 'recipient.';
+    public const PREFIX = 'recipient.';
 
     /**
      * {@inheritdoc}

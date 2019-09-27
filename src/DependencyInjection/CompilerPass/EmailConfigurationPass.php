@@ -15,7 +15,7 @@ class EmailConfigurationPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (! $container->getParameter('fazland.notifire.emails.enabled')) {
             return;

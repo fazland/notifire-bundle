@@ -7,7 +7,7 @@ use Fazland\NotifireBundle\Extension\ExtensionInterface;
 
 class ExtendableBuilder extends NotifireBuilder
 {
-    public function addExtension(ExtensionInterface $extension)
+    public function addExtension(ExtensionInterface $extension): void
     {
         $extension->register($this);
     }

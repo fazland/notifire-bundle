@@ -26,14 +26,14 @@ class NotifireBundleCompositeTest extends WebTestCase
     /**
      * {@inheritdoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $fs = new Filesystem();
         $fs->remove(__DIR__.'/Fixtures/cache');
         $fs->remove(__DIR__.'/Fixtures/logs');
     }
 
-    public function testCompositeConfiguration()
+    public function testCompositeConfiguration(): void
     {
         $client = static::createClient();
         $container = $client->getContainer();

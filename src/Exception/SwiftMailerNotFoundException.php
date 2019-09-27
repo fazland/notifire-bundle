@@ -9,6 +9,6 @@ namespace Fazland\NotifireBundle\Exception;
  *
  * @author Massimiliano Braglia <massimiliano.braglia@fazland.com>
  */
-class SwiftMailerNotFoundException extends \Exception implements ExceptionInterface
+class SwiftMailerNotFoundException extends \RuntimeException implements ExceptionInterface
 {
 }

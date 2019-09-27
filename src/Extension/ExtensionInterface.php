@@ -17,5 +17,5 @@ interface ExtensionInterface
      *
      * @param NotifireBuilder $builder
      */
-    public function register(NotifireBuilder $builder);
+    public function register(NotifireBuilder $builder): void;
 }

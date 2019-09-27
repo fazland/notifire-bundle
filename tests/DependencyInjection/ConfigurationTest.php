@@ -24,13 +24,13 @@ class ConfigurationTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->classUtils = $this->prophesize(ClassUtils::class);
         $this->processor = new Processor();
     }
 
-    public function testNotConfigured()
+    public function testNotConfigured(): void
     {
         $this->classUtils->exists(SendMethods::class)->willReturn(false);
 
@@ -49,7 +49,7 @@ class ConfigurationTest extends TestCase
         ], $configuration);
     }
 
-    public function testConfigureSms()
+    public function testConfigureSms(): void
     {
         $services = [
             'client1' => [

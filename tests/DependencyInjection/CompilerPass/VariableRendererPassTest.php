@@ -23,12 +23,12 @@ class VariableRendererPassTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->compilerPass = new VariableRendererPass();
     }
 
-    public function testProcessShouldRegisterVariableRenderers()
+    public function testProcessShouldRegisterVariableRenderers(): void
     {
         $container = $this->prophesize(ContainerBuilder::class);
         $definition = $this->prophesize(Definition::class);
@@ -46,12 +46,19 @@ class VariableRendererPassTest extends TestCase
 
         $container->hasParameter('fazland.notifire.default_variable_renderer')->willReturn(false);
 
-        $definition->addMethodCall('addRenderer', Argument::that(function ($arg) {
-            return \is_array($arg) && $arg[0] instanceof Reference && 'renderer.one' === (string) $arg[0];
-        }))->shouldBeCalled();
-        $definition->addMethodCall('addRenderer', Argument::that(function ($arg) {
-            return \is_array($arg) && $arg[0] instanceof Reference && 'renderer.two' === (string) $arg[0];
-        }))->shouldBeCalled();
+        $definition
+            ->addMethodCall('addRenderer', Argument::that(function ($arg) {
+                return \is_array($arg) && $arg[0] instanceof Reference && 'renderer.one' === (string) $arg[0];
+            }))
+            ->shouldBeCalled()
+        ;
+
+        $definition
+            ->addMethodCall('addRenderer', Argument::that(function ($arg) {
+                return \is_array($arg) && $arg[0] instanceof Reference && 'renderer.two' === (string) $arg[0];
+            }))
+            ->shouldBeCalled()
+        ;
 
         $container->getDefinition('fazland.notifire.variable_renderer.factory')
             ->willReturn($definition->reveal())

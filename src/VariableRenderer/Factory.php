@@ -2,7 +2,7 @@
 
 namespace Fazland\NotifireBundle\VariableRenderer;
 
-use Fazland\NotifireBundle\Exception\VariableRendererAlreadyRegistered;
+use Fazland\NotifireBundle\Exception\VariableRendererAlreadyRegisteredException;
 use Fazland\NotifireBundle\Exception\VariableRendererNotFoundException;
 
 /**
@@ -23,13 +23,13 @@ class Factory
     /**
      * @param VariableRendererInterface $renderer
      *
-     * @throws VariableRendererAlreadyRegistered
+     * @throws VariableRendererAlreadyRegisteredException
      */
-    public function addRenderer(VariableRendererInterface $renderer)
+    public function addRenderer(VariableRendererInterface $renderer): void
     {
         $name = $renderer->getName();
         if (isset($this->renderers[$name])) {
-            throw new VariableRendererAlreadyRegistered("A renderer with name '$name' has been already registered");
+            throw new VariableRendererAlreadyRegisteredException("A renderer with name '$name' has been already registered");
         }
 
         $this->renderers[$name] = $renderer;

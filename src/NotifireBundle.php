@@ -16,7 +16,10 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class NotifireBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    /**
+     * {@inheritdoc}
+     */
+    public function build(ContainerBuilder $container): void
     {
         $container
             ->addCompilerPass(new ExtensionPass())
@@ -30,7 +33,7 @@ class NotifireBundle extends Bundle
     /**
      * {@inheritdoc}
      */
-    public function boot()
+    public function boot(): void
     {
         $this->container
             ->get('fazland.notifire.builder')

@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MailgunRendererTest extends TestCase
 {
-    public function testRender()
+    public function testRender(): void
     {
         $renderer = new MailgunRenderer();
 

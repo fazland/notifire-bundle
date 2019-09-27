@@ -14,7 +14,7 @@ class CoreExtension implements ExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function register(NotifireBuilder $builder)
+    public function register(NotifireBuilder $builder): void
     {
         $builder
             ->addNotification('email', $this->getEmailClass())

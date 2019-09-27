@@ -29,13 +29,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): NodeParentInterface
     {
-        if (\method_exists(TreeBuilder::class, 'getRootNode')) {
-            $treeBuilder = new TreeBuilder('fazland_notifire');
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            $treeBuilder = new TreeBuilder();
-            $rootNode = $treeBuilder->root('fazland_notifire');
-        }
+        $treeBuilder = new TreeBuilder('fazland_notifire');
+        $rootNode = $treeBuilder->getRootNode();
 
         $this->addEmailSection($rootNode);
         $this->addSmsSection($rootNode);
@@ -45,7 +40,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    private function addEmailSection(ArrayNodeDefinition $rootNode)
+    private function addEmailSection(ArrayNodeDefinition $rootNode): void
     {
         $rootNode
             ->children()
@@ -80,11 +75,7 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                                 ->validate()
                                     ->ifTrue(function ($value) {
-                                        if ('mailgun' === $value['provider'] && (! isset($value['api_key']) || ! isset($value['domain']))) {
-                                            return true;
-                                        }
-
-                                        return false;
+                                        return 'mailgun' === $value['provider'] && (! isset($value['api_key']) || ! isset($value['domain']));
                                     })
                                     ->thenInvalid('Invalid mailer configuration')
                                 ->end()
@@ -96,7 +87,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addSmsSection(ArrayNodeDefinition $rootNode)
+    private function addSmsSection(ArrayNodeDefinition $rootNode): void
     {
         $smsService = $rootNode
             ->children()
@@ -111,7 +102,7 @@ class Configuration implements ConfigurationInterface
                 ->useAttributeAsKey('name')
                 ->prototype('array')
                     ->validate()
-                        ->ifTrue(function ($value) {
+                        ->ifTrue(static function ($value) {
                             return false;
                         })
                         ->thenInvalid('Invalid SMS service configuration')
@@ -171,7 +162,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $rootNode
      */
-    private function addDefaultRendererSection(ArrayNodeDefinition $rootNode)
+    private function addDefaultRendererSection(ArrayNodeDefinition $rootNode): void
     {
         $rootNode
             ->children()

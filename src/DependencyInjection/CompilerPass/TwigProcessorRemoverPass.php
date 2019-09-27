@@ -7,7 +7,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class TwigProcessorRemoverPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    /**
+     * {@inheritdoc}
+     */
+    public function process(ContainerBuilder $container): void
     {
         if (! $container->hasDefinition('twig')) {
             $container->removeDefinition('fazland.notifire.processor.twig_processor');

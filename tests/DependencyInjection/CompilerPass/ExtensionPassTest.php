@@ -20,12 +20,12 @@ class ExtensionPassTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->compilerPass = new ExtensionPass();
     }
 
-    public function testProcessShouldAddExtensionsCallToTheBuilder()
+    public function testProcessShouldAddExtensionsCallToTheBuilder(): void
     {
         $container = $this->prophesize(ContainerBuilder::class);
         $definition = $this->prophesize(Definition::class);
@@ -41,12 +41,19 @@ class ExtensionPassTest extends TestCase
             ])
         ;
 
-        $definition->addMethodCall('addExtension', Argument::that(function ($arg) {
-            return \is_array($arg) && $arg[0] instanceof Reference && 'extension.one' === (string) $arg[0];
-        }))->shouldBeCalled();
-        $definition->addMethodCall('addExtension', Argument::that(function ($arg) {
-            return \is_array($arg) && $arg[0] instanceof Reference && 'extension.two' === (string) $arg[0];
-        }))->shouldBeCalled();
+        $definition
+            ->addMethodCall('addExtension', Argument::that(function ($arg) {
+                return \is_array($arg) && $arg[0] instanceof Reference && 'extension.one' === (string) $arg[0];
+            }))
+            ->shouldBeCalled()
+        ;
+
+        $definition
+            ->addMethodCall('addExtension', Argument::that(function ($arg) {
+                return \is_array($arg) && $arg[0] instanceof Reference && 'extension.two' === (string) $arg[0];
+            }))
+            ->shouldBeCalled()
+        ;
 
         $this->compilerPass->process($container->reveal());
     }

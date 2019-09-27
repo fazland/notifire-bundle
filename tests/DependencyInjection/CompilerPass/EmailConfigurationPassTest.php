@@ -24,14 +24,14 @@ class EmailConfigurationPassTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->pass = new EmailConfigurationPass();
         $this->container = new ContainerBuilder();
         $this->container->setParameter('fazland.notifire.emails.enabled', true);
     }
 
-    public function testShouldNotAddServiceIfDisabled()
+    public function testShouldNotAddServiceIfDisabled(): void
     {
         $container = $this->prophesize(ContainerBuilder::class);
         $container->getParameter('fazland.notifire.emails.enabled')->willReturn(false);
@@ -42,7 +42,7 @@ class EmailConfigurationPassTest extends TestCase
         $this->pass->process($container->reveal());
     }
 
-    public function testShouldAutoRegisterSwiftmailerMailers()
+    public function testShouldAutoRegisterSwiftmailerMailers(): void
     {
         $swiftExtension = $this->prophesize(ExtensionInterface::class);
         $swiftExtension->getAlias()->willReturn('swiftmailer');

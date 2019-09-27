@@ -4,11 +4,13 @@ namespace Fazland\NotifireBundle\Twig;
 
 use Fazland\NotifireBundle\Exception\VariableRendererNotFoundException;
 use Fazland\NotifireBundle\VariableRenderer\Factory;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
 /**
  * @author Massimiliano Braglia <massimiliano.braglia@fazland.com>
  */
-class VariableRendererExtension extends \Twig_Extension
+class VariableRendererExtension extends AbstractExtension
 {
     /**
      * @var Factory
@@ -31,9 +33,9 @@ class VariableRendererExtension extends \Twig_Extension
     }
 
     /**
-     * @param string $renderer
+     * @param string|null $renderer
      */
-    public function setDefaultRenderer($renderer)
+    public function setDefaultRenderer(?string $renderer): void
     {
         $this->defaultRenderer = $renderer;
     }
@@ -44,7 +46,7 @@ class VariableRendererExtension extends \Twig_Extension
     public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('render_variable', [$this, 'render']),
+            new TwigFilter('render_variable', [$this, 'render']),
         ];
     }
 
@@ -72,13 +74,5 @@ class VariableRendererExtension extends \Twig_Extension
             ->get(empty($rendererName) ? $this->defaultRenderer : $rendererName)
             ->render($variable)
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName(): string
-    {
-        return 'fazland.notifire.variable_renderer_extension';
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Fazland\NotifireBundle\Tests\VariableRenderer;
 
+use Fazland\NotifireBundle\Exception\VariableRendererAlreadyRegisteredException;
+use Fazland\NotifireBundle\Exception\VariableRendererNotFoundException;
 use Fazland\NotifireBundle\VariableRenderer\Factory;
 use Fazland\NotifireBundle\VariableRenderer\VariableRendererInterface;
 use PHPUnit\Framework\TestCase;
@@ -16,24 +18,25 @@ class FactoryTest extends TestCase
      */
     private $factory;
 
-    protected function setUp()
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp(): void
     {
         $this->factory = new Factory();
     }
 
-    /**
-     * @expectedException \Fazland\NotifireBundle\Exception\VariableRendererNotFoundException
-     */
-    public function testVariableRendererNotFound()
+    public function testVariableRendererNotFound(): void
     {
+        $this->expectException(VariableRendererNotFoundException::class);
+
         $this->factory->get('non_existing_renderer');
     }
 
-    /**
-     * @expectedException \Fazland\NotifireBundle\Exception\VariableRendererAlreadyRegistered
-     */
-    public function testVariableRendererAlreadyRegistered()
+    public function testVariableRendererAlreadyRegistered(): void
     {
+        $this->expectException(VariableRendererAlreadyRegisteredException::class);
+
         /** @var VariableRendererInterface $renderer */
         $renderer = $this->prophesize(VariableRendererInterface::class);
         $renderer->getName()->willReturn('test_renderer');
@@ -42,7 +45,7 @@ class FactoryTest extends TestCase
         $this->factory->addRenderer($renderer->reveal());
     }
 
-    public function testAddAndGetRenderer()
+    public function testAddAndGetRenderer(): void
     {
         /** @var VariableRendererInterface $renderer */
         $renderer = $this->prophesize(VariableRendererInterface::class);

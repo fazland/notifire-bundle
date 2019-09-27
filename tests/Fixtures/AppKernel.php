@@ -26,7 +26,10 @@ class AppKernel extends Kernel
         $this->configFileName = $configFileName;
     }
 
-    public function getCacheDir()
+    /**
+     * {@inheritdoc}
+     */
+    public function getCacheDir(): string
     {
         return __DIR__.'/cache';
     }
@@ -48,7 +51,7 @@ class AppKernel extends Kernel
     /**
      * {@inheritdoc}
      */
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $loader->load(__DIR__.'/config/'.$this->configFileName);
     }

@@ -29,19 +29,19 @@ class NotifireBundleTest extends WebTestCase
     /**
      * {@inheritdoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $fs = new Filesystem();
         $fs->remove(__DIR__.'/Fixtures/cache');
         $fs->remove(__DIR__.'/Fixtures/logs');
     }
 
-    public function provideRoutesAndExpectedResults()
+    public function provideRoutesAndExpectedResults(): iterable
     {
         yield ['/test-mailgun-variable-renderer', 'mailgun_variable_render.txt'];
     }
 
-    public function testSwiftMailerHandlerConfiguration()
+    public function testSwiftMailerHandlerConfiguration(): void
     {
         $client = static::createClient();
         $container = $client->getContainer();
@@ -53,7 +53,7 @@ class NotifireBundleTest extends WebTestCase
         self::assertInstanceOf(SwiftMailerHandler::class, $container->get('fazland.notifire.handler.email.second_mailer'));
     }
 
-    public function testTwilioServiceHandlerConfiguration()
+    public function testTwilioServiceHandlerConfiguration(): void
     {
         $client = static::createClient();
         $container = $client->getContainer();
@@ -64,7 +64,7 @@ class NotifireBundleTest extends WebTestCase
         self::assertInstanceOf(TwilioHandler::class, $container->get("fazland.notifire.handler.sms.$name"));
     }
 
-    public function testSkebbyHandlerConfiguration()
+    public function testSkebbyHandlerConfiguration(): void
     {
         $client = static::createClient();
         $container = $client->getContainer();
@@ -73,7 +73,7 @@ class NotifireBundleTest extends WebTestCase
         self::assertInstanceOf(SkebbyHandler::class, $container->get('fazland.notifire.handler.sms.skebby'));
     }
 
-    public function testMailgunHandlerConfiguration()
+    public function testMailgunHandlerConfiguration(): void
     {
         $client = static::createClient();
         $container = $client->getContainer();
@@ -85,7 +85,7 @@ class NotifireBundleTest extends WebTestCase
     /**
      * @dataProvider provideRoutesAndExpectedResults
      */
-    public function testMailgunVariableRenderer($route, $resultFile)
+    public function testMailgunVariableRenderer(string $route, string $resultFile): void
     {
         $client = static::createClient();
         $client->request('GET', $route);

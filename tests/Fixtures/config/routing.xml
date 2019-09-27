@@ -5,11 +5,11 @@
         http://symfony.com/schema/routing/routing-1.0.xsd">
 
     <route id="test_home" path="/">
-        <default key="_controller">TestBundle:Test:default</default>
+        <default key="_controller">Fazland\NotifireBundle\Tests\Fixtures\TestBundle\Controller\TestController::defaultAction</default>
     </route>
 
     <route id="test_mailgun_variable_renderer" path="/test-mailgun-variable-renderer">
-        <default key="_controller">FrameworkBundle:Template:template</default>
+        <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction</default>
         <default key="template">TestBundle::mailgun_variable_render.txt.twig</default>
     </route>
 </routes>
